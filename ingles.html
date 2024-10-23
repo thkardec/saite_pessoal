@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Tradução</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+        }
+        #quiz-container {
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #options {
+            margin: 20px 0;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button.correct {
+            background-color: #28a745; /* Verde */
+        }
+        #next-btn {
+            display: none;
+        }
+        #score {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Quiz de Tradução</h1>
+        <p id="question"></p>
+        <div id="options"></div>
+        <p id="score">Acertos: 0 | Erros: 0</p>
+        <button id="next-btn" class="button" onclick="nextQuestion()">Próxima</button>
+    </div>
+
+    <script>
+        const questions = [
+    
+    {word: "hello", correct: "olá", options: ["oi", "bom dia", "boa noite", "tchau"]},
+    {word: "goodbye", correct: "adeus", options: ["tchau", "olá", "até logo", "bom dia"]},
+    {word: "please", correct: "por favor", options: ["obrigado", "desculpe", "com licença", "sinto muito"]},
+    {word: "thank you", correct: "obrigado", options: ["por favor", "adeus", "olá", "bom dia"]},
+    {word: "happy", correct: "feliz", options: ["triste", "contente", "alegre", "satisfeito"]},
+    {word: "car", correct: "carro", options: ["moto", "bicicleta", "ônibus", "caminhão"]},
+    {word: "friend", correct: "amigo", options: ["inimigo", "conhecido", "colega", "parente"]},
+    {word: "house", correct: "casa", options: ["apartamento", "edifício", "quarto", "salão"]},
+    {word: "time", correct: "tempo", options: ["hora", "dia", "semana", "mês"]},
+    {word: "can", correct: "poder", options: ["conseguir", "saber", "tentar", "fazer"]},
+    {word: "said", correct: "disse", options: ["falou", "contou", "escreveu", "ouvimos"]},
+    {word: "more", correct: "mais", options: ["menos", "tanto", "pouco", "maior"]},
+    {word: "the", correct: "o, a, os, as", options: ["um", "uma", "dois", "três"]},
+    {word: "no", correct: "não", options: ["sim", "talvez", "claro", "jamais"]},
+    {word: "love", correct: "amor", options: ["ódio", "felicidade", "raiva", "paz"]},
+    {word: "food", correct: "comida", options: ["bebida", "snack", "almoço", "jantar"]},
+    {word: "water", correct: "água", options: ["suco", "leite", "café", "chá"]},
+    {word: "family", correct: "família", options: ["parente", "amigo", "conhecido", "colega"]},
+    {word: "work", correct: "trabalho", options: ["emprego", "serviço", "tarefa", "projeto"]},
+    {word: "love", correct: "amor", options: ["ódio", "felicidade", "raiva", "paz"]},
+    {word: "day", correct: "dia", options: ["noite", "mês", "ano", "hora"]},
+    {word: "year", correct: "ano", options: ["mês", "semana", "dia", "hora"]},
+    {word: "man", correct: "homem", options: ["mulher", "garoto", "pessoa", "criança"]},
+    {word: "woman", correct: "mulher", options: ["homem", "garota", "pessoa", "criança"]},
+    {word: "child", correct: "criança", options: ["adulto", "menino", "menina", "jovem"]},
+    {word: "school", correct: "escola", options: ["universidade", "faculdade", "ensino", "aprendizado"]},
+    {word: "love", correct: "amor", options: ["ódio", "afeição", "paixão", "cuidado"]},
+    {word: "life", correct: "vida", options: ["morte", "existência", "viver", "mundo"]},
+    {word: "world", correct: "mundo", options: ["terra", "universo", "sociedade", "vida"]},
+    {word: "time", correct: "tempo", options: ["hora", "data", "momento", "segundo"]},
+    {word: "place", correct: "lugar", options: ["área", "posição", "local", "espaço"]},
+    {word: "work", correct: "trabalho", options: ["emprego", "tarefa", "atividade", "profissão"]},
+    {word: "study", correct: "estudar", options: ["aprender", "ensinar", "pesquisar", "analisar"]},
+    {word: "run", correct: "correr", options: ["andar", "saltar", "mover", "deslocar"]},
+    {word: "walk", correct: "andar", options: ["correr", "mover", "saltar", "deslocar"]},
+    {word: "see", correct: "ver", options: ["ouvir", "sentir", "tocar", "falar"]},
+    {word: "hear", correct: "ouvir", options: ["ver", "sentir", "tocar", "falar"]},
+    {word: "speak", correct: "falar", options: ["ouvir", "dizer", "discutir", "conversar"]},
+    {word: "ask", correct: "perguntar", options: ["responder", "saber", "dizer", "contar"]},
+    {word: "tell", correct: "dizer", options: ["contar", "informar", "relatar", "perguntar"]},
+    {word: "show", correct: "mostrar", options: ["exibir", "apresentar", "expor", "demonstrar"]},
+    {word: "give", correct: "dar", options: ["oferecer", "enviar", "mandar", "distribuir"]},
+    {word: "take", correct: "levar", options: ["trazer", "carregar", "transportar", "remover"]},
+    {word: "make", correct: "fazer", options: ["criar", "produzir", "elaborar", "desenvolver"]},
+    {word: "want", correct: "querer", options: ["desejar", "precisar", "gostar", "amar"]},
+    {word: "need", correct: "precisar", options: ["querer", "desejar", "solicitar", "pedir"]},
+    {word: "like", correct: "gostar", options: ["adorar", "preferir", "detestar", "amar"]},
+    {word: "see", correct: "ver", options: ["ouvir", "sentir", "tocar", "falar"]},
+    {word: "know", correct: "saber", options: ["conhecer", "entender", "aprender", "estudar"]},
+    {word: "think", correct: "pensar", options: ["refletir", "analisar", "considerar", "examinar"]},
+    {word: "feel", correct: "sentir", options: ["perceber", "entender", "tocar", "ver"]},
+    {word: "believe", correct: "acreditar", options: ["pensar", "confiar", "suportar", "aceitar"]},
+    {word: "try", correct: "tentar", options: ["esforçar", "experimentar", "praticar", "fazer"]},
+    {word: "find", correct: "encontrar", options: ["perder", "descobrir", "buscar", "investigar"]},
+    {word: "look", correct: "olhar", options: ["ver", "encontrar", "examinar", "considerar"]},
+    {word: "give", correct: "dar", options: ["enviar", "distribuir", "oferecer", "entregar"]},
+    {word: "use", correct: "usar", options: ["aplicar", "utilizar", "manipular", "operar"]},
+    {word: "work", correct: "trabalhar", options: ["empregar", "servir", "fazer", "realizar"]},
+    {word: "feel", correct: "sentir", options: ["perceber", "entender", "ver", "ouvir"]},
+    {word: "create", correct: "criar", options: ["produzir", "desenvolver", "construir", "elaborar"]},
+    {word: "open", correct: "abrir", options: ["fechar", "iniciar", "começar", "expor"]},
+    {word: "close", correct: "fechar", options: ["abrir", "terminar", "encerrar", "desistir"]},
+    {word: "start", correct: "começar", options: ["terminar", "iniciar", "continuar", "prosseguir"]},
+    {word: "end", correct: "terminar", options: ["começar", "concluir", "finalizar", "parar"]},
+    {word: "help", correct: "ajudar", options: ["auxiliar", "apoiar", "assistir", "facilitar"]},
+    {word: "play", correct: "brincar", options: ["jogar", "participar", "divertir", "entretener"]},
+    {word: "call", correct: "chamar", options: ["ligar", "avisar", "gritar", "convocar"]},
+    {word: "live", correct: "viver", options: ["existir", "morar", "habitar", "residir"]},
+    {word: "want", correct: "querer", options: ["desejar", "precisar", "gostar", "amar"]},
+    {word: "need", correct: "precisar", options: ["querer", "desejar", "solicitar", "pedir"]},
+    {word: "give", correct: "dar", options: ["enviar", "oferecer", "mandar", "distribuir"]},
+    {word: "take", correct: "pegar", options: ["trazer", "levar", "transportar", "remover"]},
+    {word: "bring", correct: "trazer", options: ["levar", "pegar", "enviar", "transportar"]},
+    {word: "send", correct: "enviar", options: ["dar", "dar", "mandar", "distribuir"]},
+    {word: "send", correct: "enviar", options: ["dar", "dar", "mandar", "distribuir"]},
+    {word: "read", correct: "ler", options: ["escrever", "compreender", "analisar", "interpretar"]},
+    {word: "write", correct: "escrever", options: ["digitar", "descrever", "contar", "relatar"]},
+    {word: "sing", correct: "cantar", options: ["falar", "tocar", "dançar", "recitar"]},
+    {word: "dance", correct: "dançar", options: ["cantar", "falar", "tocar", "movimentar"]},
+    {word: "show", correct: "mostrar", options: ["exibir", "revelar", "apresentar", "expor"]},
+    {word: "listen", correct: "ouvir", options: ["escutar", "entender", "perceber", "compreender"]},
+    {word: "think", correct: "pensar", options: ["analisar", "refletir", "considerar", "imaginar"]},
+    {word: "speak", correct: "falar", options: ["discutir", "comunicar", "dizer", "conversar"]},
+    {word: "tell", correct: "contar", options: ["narrar", "dizer", "falar", "reportar"]},
+    {word: "watch", correct: "assistir", options: ["ver", "observar", "analisar", "examinar"]},
+    {word: "look", correct: "olhar", options: ["ver", "examinar", "observar", "contemplar"]},
+    {word: "remember", correct: "lembrar", options: ["esquecer", "recordar", "retomar", "relembrar"]},
+    {word: "forget", correct: "esquecer", options: ["lembrar", "recordar", "retomar", "relembrar"]},
+    {word: "learn", correct: "aprender", options: ["ensinar", "estudar", "descobrir", "explorar"]},
+    {word: "discover", correct: "descobrir", options: ["encontrar", "revelar", "desvendar", "explorar"]},
+    {word: "explore", correct: "explorar", options: ["descobrir", "investigar", "analisar", "estudar"]},
+    {word: "play", correct: "brincar", options: ["divertir", "jogar", "competir", "entreter"]},
+    {word: "stop", correct: "parar", options: ["continuar", "cessar", "interromper", "terminar"]},
+    {word: "end", correct: "terminar", options: ["começar", "concluir", "finalizar", "cessar"]},
+    {word: "begin", correct: "começar", options: ["terminar", "iniciar", "dar início", "abrir"]},
+    {word: "continue", correct: "continuar", options: ["prosseguir", "parar", "cessar", "interromper"]},
+    {word: "think", correct: "pensar", options: ["considerar", "analisar", "refletir", "imaginar"]},
+    {word: "believe", correct: "acreditar", options: ["pensar", "confiar", "imaginar", "considerar"]},
+    {word: "hope", correct: "esperar", options: ["desejar", "anhelar", "almejar", "ansiar"]},
+    {word: "dream", correct: "sonhar", options: ["imaginar", "visualizar", "fantasiar", "idealizar"]},
+    {word: "wish", correct: "desejar", options: ["querer", "ansiar", "anhelar", "almejar"]},
+    {word: "wait", correct: "esperar", options: ["aguardar", "reclamar", "pedir", "questionar"]},
+    {word: "try", correct: "tentar", options: ["esforçar", "experienciar", "realizar", "fazer"]},
+    {word: "follow", correct: "seguir", options: ["ir", "perseguir", "continuar", "conduzir"]},
+    {word: "lead", correct: "liderar", options: ["conduzir", "guiar", "orientar", "dirigir"]},
+    {word: "help", correct: "ajudar", options: ["auxiliar", "assistir", "apoiar", "socorrer"]},
+    {word: "support", correct: "apoiar", options: ["ajudar", "auxiliar", "sustentar", "socorrer"]},
+    {word: "fight", correct: "lutar", options: ["batalhar", "disputar", "combater", "conflitar"]},
+    {word: "attack", correct: "atacar", options: ["defender", "agredir", "batalhar", "lutar"]},
+    {word: "defend", correct: "defender", options: ["proteger", "atacar", "confrontar", "combater"]},
+    {word: "argue", correct: "discutir", options: ["debater", "disputar", "batalhar", "lutar"]},
+    {word: "fight", correct: "lutar", options: ["conflitar", "disputar", "debater", "conversar"]},
+    {word: "get", correct: "obter", options: ["conseguir", "receber", "captar", "adquirir"]},
+    {word: "give", correct: "dar", options: ["enviar", "transmitir", "oferecer", "distribuir"]},
+    {word: "put", correct: "colocar", options: ["deixar", "definir", "estabelecer", "inserir"]},
+    {word: "keep", correct: "manter", options: ["conservar", "guardar", "retirar", "tomar"]},
+    {word: "hold", correct: "segurar", options: ["manter", "agarrar", "sustentar", "apoiar"]},
+    {word: "carry", correct: "carregar", options: ["transportar", "levar", "trazer", "mover"]},
+    {word: "pass", correct: "passar", options: ["ceder", "transmitir", "enviar", "transportar"]},
+    {word: "receive", correct: "receber", options: ["dar", "aceitar", "captar", "adquirir"]},
+    {word: "learn", correct: "aprender", options: ["ensinar", "descobrir", "estudar", "explorar"]},
+    {word: "study", correct: "estudar", options: ["aprender", "ensinar", "investigar", "pesquisar"]},
+    {word: "teach", correct: "ensinar", options: ["aprender", "orientar", "instruir", "educar"]},
+   
+
+
+        ];
+
+        let currentQuestionIndex = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+
+        function shuffleOptions(options) {
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            return options;
+        }
+
+        function checkAnswer(selected, correct) {
+            return selected === correct;
+        }
+
+        function showNextButton() {
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function hideNextButton() {
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            updateQuestion();
+            hideNextButton();
+        }
+
+        function updateQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            document.getElementById("question").innerText = `Qual a tradução da palavra "${currentQuestion.word}"?`;
+
+            // Ensure the correct answer is always included in the options
+            const options = [...currentQuestion.options, currentQuestion.correct];
+            const shuffledOptions = shuffleOptions(options);
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement("button");   
+
+                button.innerText = option;   
+
+                button.className = "button";
+                button.onclick = function () {
+                    if (checkAnswer(option, currentQuestion.correct)) {
+                        correctCount++;
+                        button.classList.add("correct");
+                    } else {
+                        wrongCount++;
+                        // Highlight the correct answer
+                        const correctButton = Array.from(optionsContainer.children).find(btn => btn.innerText === currentQuestion.correct);
+                        if (correctButton) {
+                            correctButton.classList.add("correct");
+                        }
+                    }
+                    showNextButton();
+                    document.getElementById("score").innerText = `Acertos: ${correctCount} | Erros: ${wrongCount}`;
+                    // Disable all buttons after choice
+                    Array.from(optionsContainer.children).forEach(btn => {
+                        btn.onclick = null;
+                    });
+                };
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Start the quiz
+        updateQuestion();
+    </script>
+</body>
+</html>

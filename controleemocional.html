@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+        }
+        #quiz-container {
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #options {
+            margin: 20px 0;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button.correct {
+            background-color: #28a745; /* Verde */
+        }
+        #next-btn {
+            display: none;
+        }
+        #score {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Quiz</h1>
+        <p id="question"></p>
+        <div id="options"></div>
+        <p id="score">Acertos: 0 | Erros: 0</p>
+        <button id="next-btn" class="button" onclick="nextQuestion()">Próxima</button>
+    </div>
+
+    <script>
+        const questions = [
+        {
+  "word": "Você recebe uma crítica injusta no trabalho, que o deixa muito irritado. Como uma pessoa com controle emocional lidaria com isso?",
+  "correct": "Respirar fundo, refletir e escolher responder de forma calma e profissional.",
+  "options": [
+    "Revidar imediatamente com críticas também.",
+    "Ficar em silêncio e guardar ressentimento.",
+    "Tentar entender a perspectiva do outro e responder com calma.",
+    "Deixar o local imediatamente para evitar confrontos."
+  ]
+},
+{
+  "word": "Você está preso no trânsito e começa a se sentir muito frustrado. Qual seria uma atitude de controle emocional?",
+  "correct": "Aceitar que o trânsito está fora de seu controle e usar o tempo para relaxar ou ouvir algo que goste.",
+  "options": [
+    "Buzinar insistentemente para os carros à frente.",
+    "Ficar irritado e pensar em como isso está estragando o seu dia.",
+    "Focar em algo que você possa controlar, como respirar fundo ou ouvir música.",
+    "Sair do carro e discutir com outros motoristas."
+  ]
+},
+{
+  "word": "Em uma discussão com um amigo, você percebe que está começando a perder a paciência. Como você agiria para controlar suas emoções?",
+  "correct": "Pausar a conversa, respirar fundo e retomar o diálogo de forma calma e respeitosa.",
+  "options": [
+    "Elevar o tom de voz e tentar ganhar a discussão.",
+    "Interromper o amigo constantemente para se defender.",
+    "Sugerir uma pausa para se acalmar e retomar o diálogo mais tarde.",
+    "Ficar em silêncio e deixar a discussão sem resolver nada."
+  ]
+},
+{
+  "word": "Você comete um erro importante no trabalho e se sente muito ansioso sobre as consequências. O que faria alguém com controle emocional?",
+  "correct": "Aceitar o erro, aprender com ele e procurar uma solução sem se deixar dominar pela ansiedade.",
+  "options": [
+    "Ficar obcecado pelo erro e não conseguir se concentrar em mais nada.",
+    "Ignorar o erro e esperar que ninguém perceba.",
+    "Reconhecer o erro, aprender com ele e buscar corrigir a situação.",
+    "Culpar outra pessoa ou circunstância pelo erro."
+  ]
+},
+{
+  "word": "Você está esperando uma resposta importante de um cliente, mas a demora está gerando ansiedade. Como uma pessoa emocionalmente controlada reagiria?",
+  "correct": "Aceitar que a resposta está fora de seu controle e focar em outras tarefas enquanto aguarda.",
+  "options": [
+    "Enviar várias mensagens ao cliente pedindo a resposta.",
+    "Ficar ansioso e pensar no pior cenário possível.",
+    "Aceitar a situação e se concentrar em outras coisas produtivas enquanto espera.",
+    "Deixar de fazer qualquer coisa até receber a resposta."
+  ]
+},
+{
+  "word": "Durante uma reunião, alguém faz uma piada de mau gosto sobre você, e você se sente ofendido. Como alguém com controle emocional reagiria?",
+  "correct": "Responder de forma educada, mantendo a compostura e escolhendo não se ofender facilmente.",
+  "options": [
+    "Revidar com outra piada para se vingar.",
+    "Ficar em silêncio e ressentido pelo resto da reunião.",
+    "Manter a calma e, se necessário, esclarecer de forma tranquila que a piada foi inapropriada.",
+    "Sair da reunião imediatamente, mostrando sua irritação."
+  ]
+},
+{
+  "word": "Você está com muito trabalho acumulado e começa a se sentir sobrecarregado. Qual seria a melhor maneira de controlar suas emoções?",
+  "correct": "Priorizar as tarefas e trabalhar de forma organizada, sem se deixar dominar pelo estresse.",
+  "options": [
+    "Entrar em pânico e tentar fazer tudo de uma vez.",
+    "Procrastinar porque se sente incapaz de lidar com o volume de trabalho.",
+    "Organizar suas tarefas, priorizar o que é mais importante e trabalhar com calma.",
+    "Reclamar constantemente sobre o excesso de trabalho, sem tentar resolver."
+  ]
+},
+{
+  "word": "Você vê uma postagem nas redes sociais que o incomoda profundamente. O que alguém com controle emocional faria?",
+  "correct": "Refletir antes de reagir e escolher ignorar a postagem ou responder de forma respeitosa, se necessário.",
+  "options": [
+    "Responder imediatamente com um comentário agressivo.",
+    "Compartilhar a postagem com amigos para criticá-la em grupo.",
+    "Respirar fundo, refletir e, se necessário, responder de forma educada.",
+    "Bloquear a pessoa imediatamente para evitar mais incômodo."
+  ]
+},
+{
+  "word": "Você está em um ambiente social onde alguém começa a discutir sobre um tema sensível que o incomoda. Como uma pessoa com controle emocional responderia?",
+  "correct": "Manter a calma, expressar sua opinião de forma respeitosa ou se afastar da conversa, se necessário.",
+  "options": [
+    "Entrar na discussão e elevar o tom de voz para defender seu ponto de vista.",
+    "Ficar irritado e deixar o ambiente sem dizer nada.",
+    "Manter a compostura, expressar sua opinião com respeito ou se afastar da conversa educadamente.",
+    "Ignorar completamente e sentir-se mal em silêncio."
+  ]
+},
+{
+  "word": "Você percebe que está começando a ficar nervoso antes de uma apresentação importante. O que uma pessoa emocionalmente controlada faria?",
+  "correct": "Respirar fundo, lembrar-se de sua preparação e focar no que pode controlar.",
+  "options": [
+    "Ficar cada vez mais nervoso e pensar em todas as coisas que podem dar errado.",
+    "Desistir da apresentação por medo de falhar.",
+    "Respirar fundo, focar na preparação e lembrar-se de que o nervosismo é natural.",
+    "Procrastinar e evitar a preparação até o último minuto."
+  ]
+}
+
+
+
+        ];
+
+        let currentQuestionIndex = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+
+        function shuffleOptions(options) {
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            return options;
+        }
+
+        function checkAnswer(selected, correct) {
+            return selected === correct;
+        }
+
+        function showNextButton() {
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function hideNextButton() {
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            updateQuestion();
+            hideNextButton();
+        }
+
+        function updateQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            document.getElementById("question").innerText = `"${currentQuestion.word}"?`;
+
+            // Ensure the correct answer is always included in the options
+            const options = [...currentQuestion.options, currentQuestion.correct];
+            const shuffledOptions = shuffleOptions(options);
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement("button");   
+
+                button.innerText = option;   
+
+                button.className = "button";
+                button.onclick = function () {
+                    if (checkAnswer(option, currentQuestion.correct)) {
+                        correctCount++;
+                        button.classList.add("correct");
+                    } else {
+                        wrongCount++;
+                        // Highlight the correct answer
+                        const correctButton = Array.from(optionsContainer.children).find(btn => btn.innerText === currentQuestion.correct);
+                        if (correctButton) {
+                            correctButton.classList.add("correct");
+                        }
+                    }
+                    showNextButton();
+                    document.getElementById("score").innerText = `Acertos: ${correctCount} | Erros: ${wrongCount}`;
+                    // Disable all buttons after choice
+                    Array.from(optionsContainer.children).forEach(btn => {
+                        btn.onclick = null;
+                    });
+                };
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Start the quiz
+        updateQuestion();
+    </script>
+</body>
+</html>

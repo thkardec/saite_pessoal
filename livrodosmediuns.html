@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+        }
+        #quiz-container {
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #options {
+            margin: 20px 0;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button.correct {
+            background-color: #28a745; /* Verde */
+        }
+        #next-btn {
+            display: none;
+        }
+        #score {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Quiz</h1>
+        <p id="question"></p>
+        <div id="options"></div>
+        <p id="score">Acertos: 0 | Erros: 0</p>
+        <button id="next-btn" class="button" onclick="nextQuestion()">Próxima</button>
+    </div>
+
+    <script>
+        const questions = [
+    
+        {
+  "word": "Qual é o papel dos médiuns na comunicação com os espíritos, segundo O Livro dos Médiuns?",
+  "correct": "Os médiuns são intermediários entre os espíritos e os homens, facilitando a comunicação espiritual.",
+  "options": [
+    "São responsáveis por controlar os espíritos e suas manifestações.",
+    "Agem como canal de comunicação entre os espíritos e os homens.",
+    "Têm o poder de convocar qualquer espírito a qualquer momento.",
+    "Usam poderes mágicos para trazer os espíritos ao plano físico."
+  ]
+},
+{
+  "word": "O que Kardec diz sobre a natureza dos espíritos que se comunicam?",
+  "correct": "Os espíritos que se comunicam podem variar em nível moral, indo de espíritos elevados a espíritos imperfeitos.",
+  "options": [
+    "Apenas espíritos superiores se comunicam com os médiuns.",
+    "A maioria dos espíritos comunicantes são elevados e iluminados.",
+    "Os espíritos são todos iguais e se comunicam da mesma forma.",
+    "Os espíritos podem ser de níveis diferentes, desde elevados até inferiores."
+  ]
+},
+{
+  "word": "Como O Livro dos Médiuns classifica os tipos de mediunidade?",
+  "correct": "Mediunidade pode ser física, sensitiva, auditiva, vidente, psicográfica.",
+  "options": [
+    "Mediunidade se restringe apenas à comunicação escrita.",
+    "Apenas médiuns sensitivos conseguem contato com espíritos.",
+    "Existem vários tipos de mediunidade, como física, auditiva e psicográfica.",
+    "Só médiuns videntes conseguem ver os espíritos."
+  ]
+},
+{
+  "word": "Qual é o papel dos médiuns na comunicação com os espíritos, segundo O Livro dos Médiuns?",
+  "correct": "Os médiuns são intermediários entre os espíritos e os homens, facilitando a comunicação espiritual.",
+  "options": [
+    "São responsáveis por controlar os espíritos e suas manifestações.",
+    "Agem como canal de comunicação entre os espíritos e os homens.",
+    "Têm o poder de convocar qualquer espírito a qualquer momento.",
+    "Usam poderes mágicos para trazer os espíritos ao plano físico."
+  ]
+},
+{
+  "word": "O que Kardec diz sobre a natureza dos espíritos que se comunicam?",
+  "correct": "Os espíritos que se comunicam podem variar em nível moral, indo de espíritos elevados a espíritos imperfeitos.",
+  "options": [
+    "Apenas espíritos superiores se comunicam com os médiuns.",
+    "A maioria dos espíritos comunicantes são elevados e iluminados.",
+    "Os espíritos são todos iguais e se comunicam da mesma forma.",
+    "Os espíritos podem ser de níveis diferentes, desde elevados até inferiores."
+  ]
+},
+{
+  "word": "Como O Livro dos Médiuns classifica os tipos de mediunidade?",
+  "correct": "Mediunidade pode ser física, sensitiva, auditiva, vidente, psicográfica.",
+  "options": [
+    "Mediunidade se restringe apenas à comunicação escrita.",
+    "Apenas médiuns sensitivos conseguem contato com espíritos.",
+    "Existem vários tipos de mediunidade, como física, auditiva e psicográfica.",
+    "Só médiuns videntes conseguem ver os espíritos."
+  ]
+},{
+  "word": "Qual é o papel da moralidade na prática mediúnica, segundo O Livro dos Médiuns?",
+  "correct": "A moralidade do médium é essencial para atrair bons espíritos e evitar a influência de espíritos inferiores.",
+  "options": [
+    "A moralidade do médium não tem impacto na prática mediúnica.",
+    "A moralidade é importante apenas para os espíritos, não para os médiuns.",
+    "A moralidade do médium é essencial para atrair bons espíritos e evitar a influência de espíritos inferiores.",
+    "Os médiuns de moral baixa atraem espíritos superiores para sua evolução."
+  ]
+},
+{
+  "word": "Segundo O Livro dos Médiuns, por que alguns espíritos buscam se comunicar com os encarnados?",
+  "correct": "Para dar orientações, transmitir ensinamentos ou buscar ajuda em sua evolução espiritual.",
+  "options": [
+    "Para controlar os médiuns e influenciar suas ações.",
+    "Para causar confusão e interferir na vida dos encarnados.",
+    "Para dar orientações, transmitir ensinamentos ou buscar ajuda em sua evolução espiritual.",
+    "Para mostrar seu poder sobre os vivos."
+  ]
+},
+{
+  "word": "O que distingue um médium psicofônico, segundo O Livro dos Médiuns?",
+  "correct": "O médium psicofônico fala em nome dos espíritos, sendo utilizado como instrumento para a comunicação verbal.",
+  "options": [
+    "O médium psicofônico consegue ver claramente os espíritos.",
+    "O médium psicofônico fala em nome dos espíritos, sendo utilizado como instrumento para a comunicação verbal.",
+    "O médium psicofônico escreve mensagens espirituais.",
+    "O médium psicofônico sente a presença dos espíritos, mas não se comunica com eles."
+  ]
+},
+{
+  "word": "Qual é a principal recomendação de Kardec para médiuns em desenvolvimento?",
+  "correct": "Trabalhar no aprimoramento moral e na prática da humildade.",
+  "options": [
+    "Trabalhar no aprimoramento moral e na prática da humildade.",
+    "Buscar contato com espíritos inferiores para aprender com eles.",
+    "Concentrar-se em aumentar sua habilidade de controlar os espíritos.",
+    "Praticar diariamente a comunicação com qualquer espírito disponível."
+  ]
+},
+{
+  "word": "O que define um médium de efeitos físicos?",
+  "correct": "Um médium que pode produzir fenômenos físicos como movimentação de objetos e ruídos.",
+  "options": [
+    "Um médium que pode ver os espíritos diretamente.",
+    "Um médium que pode falar em nome dos espíritos.",
+    "Um médium que pode produzir fenômenos físicos como movimentação de objetos e ruídos.",
+    "Um médium que pode ouvir os espíritos."
+  ]
+},
+{
+  "word": "Como Allan Kardec recomenda lidar com comunicações de espíritos zombeteiros?",
+  "correct": "Desconsiderar suas mensagens e manter vigilância moral.",
+  "options": [
+    "Dialogar com eles para entender suas intenções.",
+    "Aceitar todas as mensagens com cautela.",
+    "Desconsiderar suas mensagens e manter vigilância moral.",
+    "Evitar qualquer tipo de comunicação espiritual para não correr riscos."
+  ]
+},
+{
+  "word": "O que Kardec ensina sobre o uso da mediunidade para fins lucrativos?",
+  "correct": "Ele condena o uso da mediunidade para obter vantagens financeiras ou materiais.",
+  "options": [
+    "Ele afirma que é legítimo cobrar por sessões mediúnicas.",
+    "Ele encoraja o uso da mediunidade para ganhos materiais.",
+    "Ele condena o uso da mediunidade para obter vantagens financeiras ou materiais.",
+    "Ele sugere que apenas os médiuns experientes podem cobrar."
+  ]
+},
+{
+  "word": "O que são as manifestações inteligentes, segundo O Livro dos Médiuns?",
+  "correct": "São comunicações que revelam a presença de uma inteligência espiritual, como respostas a perguntas.",
+  "options": [
+    "São comunicações feitas exclusivamente por médiuns videntes.",
+    "São fenômenos físicos que não envolvem comunicação verbal.",
+    "São comunicações que revelam a presença de uma inteligência espiritual, como respostas a perguntas.",
+    "São apenas visões dos médiuns, sem mensagens claras."
+  ]
+},
+{
+  "word": "Qual é a postura de Allan Kardec em relação à dúvida nas comunicações espirituais?",
+  "correct": "Ele incentiva uma postura crítica e cuidadosa, não aceitando cegamente qualquer comunicação.",
+  "options": [
+    "Ele recomenda confiar cegamente em todas as comunicações espirituais.",
+    "Ele incentiva uma postura crítica e cuidadosa, não aceitando cegamente qualquer comunicação.",
+    "Ele sugere aceitar as comunicações apenas de espíritos conhecidos.",
+    "Ele afirma que qualquer dúvida é um sinal de fraqueza moral."
+  ]
+},
+{
+  "word": "O que são os médiuns mecânicos, segundo O Livro dos Médiuns?",
+  "correct": "Médiuns que escrevem automaticamente, movidos pela influência direta do espírito, sem intervenção consciente.",
+  "options": [
+    "Médiuns que falam automaticamente, sem pensar.",
+    "Médiuns que escrevem automaticamente, movidos pela influência direta do espírito, sem intervenção consciente.",
+    "Médiuns que controlam os espíritos para que eles escrevam.",
+    "Médiuns que ouvem vozes espirituais e as interpretam."
+  ]
+},
+{
+  "word": "O que O Livro dos Médiuns diz sobre a influência das ideias pré-concebidas nas comunicações mediúnicas?",
+  "correct": "As ideias pré-concebidas podem influenciar negativamente a interpretação das comunicações.",
+  "options": [
+    "As ideias pré-concebidas não têm impacto nas comunicações.",
+    "Os médiuns devem confiar em suas ideias prévias para entender melhor os espíritos.",
+    "As ideias pré-concebidas podem influenciar negativamente a interpretação das comunicações.",
+    "As ideias pré-concebidas são úteis para guiar os médiuns nas comunicações."
+  ]
+},
+{
+  "word": "Qual é o critério fundamental para avaliar a autenticidade de uma comunicação espiritual?",
+  "correct": "O conteúdo moral e intelectual da mensagem.",
+  "options": [
+    "A forma como o espírito se apresenta ao médium.",
+    "O conteúdo moral e intelectual da mensagem.",
+    "A habilidade do médium em controlar os espíritos.",
+    "O número de fenômenos físicos que acompanham a comunicação."
+  ]
+},
+{
+  "word": "O que distingue um médium auditivo?",
+  "correct": "É um médium que ouve a voz dos espíritos e transmite suas mensagens.",
+  "options": [
+    "É um médium que vê os espíritos, mas não os ouve.",
+    "É um médium que ouve a voz dos espíritos e transmite suas mensagens.",
+    "É um médium que pode falar em nome dos espíritos.",
+    "É um médium que sente a presença dos espíritos, mas não se comunica."
+  ]
+},
+{
+  "word": "O que O Livro dos Médiuns diz sobre o desenvolvimento da mediunidade?",
+  "correct": "A mediunidade pode ser desenvolvida com prática, estudo e elevação moral.",
+  "options": [
+    "A mediunidade é inata e não pode ser desenvolvida.",
+    "A mediunidade se desenvolve automaticamente com o tempo.",
+    "A mediunidade pode ser desenvolvida com prática, estudo e elevação moral.",
+    "A mediunidade só se desenvolve em pessoas com habilidades especiais."
+  ]
+},
+{
+  "word": "Como os espíritos zombeteiros podem ser reconhecidos?",
+  "correct": "Eles costumam transmitir mensagens frívolas ou contraditórias, sem conteúdo moral elevado.",
+  "options": [
+    "Eles sempre se apresentam como espíritos de luz.",
+    "Eles costumam transmitir mensagens frívolas ou contraditórias, sem conteúdo moral elevado.",
+    "Eles trazem apenas mensagens complexas e enigmáticas.",
+    "Eles nunca se comunicam com médiuns novatos."
+  ]
+},
+{
+  "word": "O que Kardec afirma sobre a interferência da vontade do médium nas comunicações espirituais?",
+  "correct": "O médium pode influenciar as comunicações se não mantiver a neutralidade necessária.",
+  "options": [
+    "O médium nunca interfere nas comunicações espirituais.",
+    "O médium sempre influencia as comunicações, mesmo inconscientemente.",
+    "O médium pode influenciar as comunicações se não mantiver a neutralidade necessária.",
+    "O médium só influencia os espíritos inferiores."
+  ]
+},
+{
+  "word": "Qual é o principal objetivo dos espíritos superiores ao se comunicarem com os encarnados?",
+  "correct": "Auxiliar no progresso moral e espiritual da humanidade.",
+  "options": [
+    "Mostrar sua superioridade e poder.",
+    "Auxiliar no progresso moral e espiritual da humanidade.",
+    "Dar previsões sobre o futuro.",
+    "Controlar as ações dos médiuns."
+  ]
+},
+{
+  "word": "Como O Livro dos Médiuns sugere que lidemos com comunicações contraditórias entre espíritos?",
+  "correct": "Devemos comparar o teor moral e intelectual das mensagens para discernir a verdade.",
+  "options": [
+    "Devemos aceitar a primeira comunicação como verdadeira.",
+    "Devemos comparar o teor moral e intelectual das mensagens para discernir a verdade.",
+    "Devemos rejeitar todas as comunicações.",
+    "Devemos aceitar apenas comunicações de espíritos conhecidos."
+  ]
+},
+{
+  "word": "Qual é a recomendação de Kardec sobre a prática mediúnica sem preparo adequado?",
+  "correct": "Pode atrair espíritos inferiores e causar confusão nas mensagens.",
+  "options": [
+    "É segura se o médium for experiente.",
+    "É incentivada para acelerar o desenvolvimento mediúnico.",
+    "Pode atrair espíritos inferiores e causar confusão nas mensagens.",
+    "É benéfica para médiuns de qualquer nível de habilidade."
+  ]
+},
+{
+  "word": "O que define um médium intuitivo?",
+  "correct": "Ele recebe inspirações dos espíritos e as interpreta com sua própria mente.",
+  "options": [
+    "Ele fala diretamente com os espíritos sem intermediários.",
+    "Ele recebe inspirações dos espíritos e as interpreta com sua própria mente.",
+    "Ele controla os espíritos para que eles se manifestem.",
+    "Ele apenas sente a presença dos espíritos sem se comunicar."
+  ]
+},
+{
+  "word": "O que Allan Kardec recomenda para a proteção contra espíritos enganadores?",
+  "correct": "Elevação moral, estudo e vigilância nas comunicações.",
+  "options": [
+    "Recorrer a práticas esotéricas de proteção.",
+    "Evitar qualquer contato com espíritos.",
+    "Elevação moral, estudo e vigilância nas comunicações.",
+    "Confiar em médiuns experientes para filtrar as comunicações."
+  ]
+},
+{
+  "word": "Como os espíritos desencarnados influenciam os encarnados, segundo O Livro dos Médiuns?",
+  "correct": "Eles influenciam nossos pensamentos e decisões, mas apenas se permitirmos.",
+  "options": [
+    "Eles controlam completamente nossas ações sem nosso consentimento.",
+    "Eles influenciam nossos pensamentos e decisões, mas apenas se permitirmos.",
+    "Eles só influenciam médiuns com habilidades especiais.",
+    "Eles têm influência direta sobre nossa saúde física."
+  ]
+},
+{
+  "word": "Qual é a atitude de Kardec em relação a médiuns que abusam de seu poder mediúnico?",
+  "correct": "Eles atraem espíritos inferiores e podem prejudicar a si mesmos e aos outros.",
+  "options": [
+    "Eles fortalecem sua habilidade mediúnica.",
+    "Eles atraem espíritos inferiores e podem prejudicar a si mesmos e aos outros.",
+    "Eles são guiados pelos espíritos superiores para aprender com seus erros.",
+    "Eles são punidos diretamente pelos espíritos."
+  ]
+},
+{
+  "word": "O que define um médium vidente?",
+  "correct": "Ele pode ver espíritos, mesmo que não se comunique com eles.",
+  "options": [
+    "Ele pode ver espíritos, mesmo que não se comunique com eles.",
+    "Ele pode ouvir os espíritos, mas não os vê.",
+    "Ele pode controlar os espíritos para se manifestarem.",
+    "Ele pode escrever automaticamente sob a influência dos espíritos."
+  ]
+},
+{
+  "word": "O que Kardec diz sobre a mediunidade em crianças?",
+  "correct": "Ela pode existir, mas deve ser tratada com cuidado, respeitando o desenvolvimento infantil.",
+  "options": [
+    "Ela é mais forte nas crianças do que nos adultos.",
+    "Ela é rara e não deve ser encorajada.",
+    "Ela pode existir, mas deve ser tratada com cuidado, respeitando o desenvolvimento infantil.",
+    "As crianças não podem ser médiuns."
+  ]
+},
+{
+  "word": "O que O Livro dos Médiuns ensina sobre a necessidade de estudo na prática mediúnica?",
+  "correct": "O estudo é fundamental para entender e exercer a mediunidade de maneira segura e eficaz.",
+  "options": [
+    "O estudo é fundamental para entender e exercer a mediunidade de maneira segura e eficaz.",
+    "O estudo é irrelevante, pois a mediunidade é inata.",
+    "O estudo só é necessário para médiuns de efeitos físicos.",
+    "O estudo impede que o médium desenvolva habilidades intuitivas."
+  ]
+},
+   
+
+
+        ];
+
+        let currentQuestionIndex = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+
+        function shuffleOptions(options) {
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            return options;
+        }
+
+        function checkAnswer(selected, correct) {
+            return selected === correct;
+        }
+
+        function showNextButton() {
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function hideNextButton() {
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            updateQuestion();
+            hideNextButton();
+        }
+
+        function updateQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            document.getElementById("question").innerText = `"${currentQuestion.word}"?`;
+
+            // Ensure the correct answer is always included in the options
+            const options = [...currentQuestion.options, currentQuestion.correct];
+            const shuffledOptions = shuffleOptions(options);
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement("button");   
+
+                button.innerText = option;   
+
+                button.className = "button";
+                button.onclick = function () {
+                    if (checkAnswer(option, currentQuestion.correct)) {
+                        correctCount++;
+                        button.classList.add("correct");
+                    } else {
+                        wrongCount++;
+                        // Highlight the correct answer
+                        const correctButton = Array.from(optionsContainer.children).find(btn => btn.innerText === currentQuestion.correct);
+                        if (correctButton) {
+                            correctButton.classList.add("correct");
+                        }
+                    }
+                    showNextButton();
+                    document.getElementById("score").innerText = `Acertos: ${correctCount} | Erros: ${wrongCount}`;
+                    // Disable all buttons after choice
+                    Array.from(optionsContainer.children).forEach(btn => {
+                        btn.onclick = null;
+                    });
+                };
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Start the quiz
+        updateQuestion();
+    </script>
+</body>
+</html>

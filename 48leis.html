@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+        }
+        #quiz-container {
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #options {
+            margin: 20px 0;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button.correct {
+            background-color: #28a745; /* Verde */
+        }
+        #next-btn {
+            display: none;
+        }
+        #score {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Quiz</h1>
+        <p id="question"></p>
+        <div id="options"></div>
+        <p id="score">Acertos: 0 | Erros: 0</p>
+        <button id="next-btn" class="button" onclick="nextQuestion()">Próxima</button>
+    </div>
+
+    <script>
+        const questions = [
+    
+        {
+  "word": "Você quer impressionar um superior em sua empresa. Qual seria a melhor abordagem segundo as leis do poder?",
+  "correct": "Faça com que seu superior sempre se sinta superior, nunca o ofusque.",
+  "options": [
+    "Realize um trabalho excepcional, mas sempre dê crédito ao seu superior.",
+    "Faça elogios constantes ao superior, mesmo quando ele não estiver presente.",
+    "Execute suas tarefas de maneira discreta e sem chamar atenção para si.",
+    "Desafie sutilmente as decisões do superior para parecer mais proativo."
+  ]
+},
+{
+  "word": "Você está em uma negociação difícil. Qual estratégia das 48 leis seria mais eficaz?",
+  "correct": "Sempre diga menos do que o necessário, criando mistério.",
+  "options": [
+    "Mostre todas as suas cartas para impressionar com transparência.",
+    "Fale o mínimo necessário, criando mistério sobre suas intenções.",
+    "Aja de forma imprevisível, mudando suas posições frequentemente.",
+    "Ofereça concessões rapidamente para ganhar a confiança da outra parte."
+  ]
+},
+{
+  "word": "Um rival está tentando minar sua autoridade no trabalho. Como lidar com isso de acordo com as leis do poder?",
+  "correct": "Use seus erros contra ele, destacando discretamente suas falhas.",
+  "options": [
+    "Confronte-o diretamente para mostrar sua força.",
+    "Ignorar seus ataques, concentrando-se em fortalecer sua própria posição.",
+    "Espalhe rumores sobre ele para prejudicar sua reputação.",
+    "Use seus erros contra ele, garantindo que outras pessoas percebam suas falhas."
+  ]
+},
+{
+  "word": "Você precisa delegar uma tarefa importante, mas não quer que a pessoa designada se sinta mais poderosa do que você. Qual a melhor abordagem?",
+  "correct": "Dê poder apenas parcialmente e sempre mantenha o controle final.",
+  "options": [
+    "Delegue todas as responsabilidades e observe os resultados.",
+    "Divida a tarefa em partes, mantendo o controle sobre as decisões cruciais.",
+    "Dê total liberdade para a pessoa designada, incentivando sua criatividade.",
+    "Supervisione cada etapa de perto, sem conceder autonomia."
+  ]
+},
+{
+  "word": "Você está em uma posição nova e quer evitar se expor a riscos. Qual seria a melhor abordagem baseada nas leis do poder?",
+  "correct": "Crie uma fachada de imprevisibilidade para manter os outros em alerta.",
+  "options": [
+    "Execute suas funções de maneira previsível e sem surpresas.",
+    "Mostre suas habilidades e tome iniciativas ousadas para impressionar.",
+    "Crie uma fachada de imprevisibilidade para que ninguém saiba o que esperar.",
+    "Fique quieto e deixe os outros se destacarem, enquanto você observa."
+  ]
+},
+{
+  "word": "Você deseja que as pessoas ao seu redor confiem em você. Como conseguir isso segundo as leis do poder?",
+  "correct": "Use a sedução intelectual, sempre mostrando interesse pelos interesses delas.",
+  "options": [
+    "Seja sempre direto e sincero em suas interações.",
+    "Aja de forma encantadora, mesmo que precise manipular as emoções alheias.",
+    "Ofereça apoio prático e emocional constante sem pedir nada em troca.",
+    "Use a sedução intelectual, demonstrando interesse sincero pelos outros."
+  ]
+},
+{
+  "word": "Seu superior te dá uma tarefa impossível de completar no tempo determinado. O que seria a melhor resposta segundo as 48 leis?",
+  "correct": "Use a arte de recuar discretamente e buscar uma saída estratégica.",
+  "options": [
+    "Aceite o desafio e faça o seu melhor, mesmo sabendo que é impossível.",
+    "Busque uma saída estratégica sem desafiar diretamente a autoridade do superior.",
+    "Confronte o superior sobre a impossibilidade da tarefa.",
+    "Desista da tarefa e explique que ela não pode ser realizada."
+  ]
+},
+{
+  "word": "Você está em uma posição de poder, mas um subordinado está ganhando popularidade. Como um estrategista do poder lidaria com isso?",
+  "correct": "Mantenha-o sob controle, mas sem demonstrar hostilidade aberta.",
+  "options": [
+    "Promova-o para uma posição que limite suas oportunidades de destaque.",
+    "Ignore-o, esperando que sua popularidade diminua naturalmente.",
+    "Elogie-o publicamente, mas restrinja seu poder discretamente.",
+    "Mantenha-o sob controle, sem mostrar hostilidade ou ciúmes."
+  ]
+},
+{
+  "word": "Você deseja impressionar alguém em uma discussão intelectual. Qual é a melhor maneira de aplicar a sedução intelectual?",
+  "correct": "Escute atentamente, fazendo perguntas inteligentes que mostrem interesse e conhecimento.",
+  "options": [
+    "Monopolize a conversa e exiba seus conhecimentos sem dar espaço ao outro.",
+    "Escute ativamente e faça perguntas que demonstrem genuíno interesse e conhecimento.",
+    "Mude constantemente de assunto para confundir e parecer misterioso.",
+    "Adote uma postura superior, corrigindo o outro sempre que possível."
+  ]
+},
+{
+  "word": "Você deseja influenciar a opinião de um colega usando sedução intelectual. Qual estratégia seria mais eficaz?",
+  "correct": "Apresente suas ideias de forma envolvente e faça parecer que a opinião final é dele.",
+  "options": [
+    "Confronte o colega diretamente com argumentos lógicos e irrefutáveis.",
+    "Use uma linguagem encantadora, apresentando suas ideias de maneira atraente e colaborativa.",
+    "Seja autoritário, mostrando que sua opinião é a correta e que ele deve aceitar.",
+    "Faça parecer que suas ideias são dele, incentivando-o a chegar às suas próprias conclusões."
+  ]
+},
+{
+  "word": "Durante uma negociação, como a sedução intelectual pode ajudar a conquistar confiança?",
+  "correct": "Crie uma conexão emocional, fazendo a outra parte se sentir compreendida e importante.",
+  "options": [
+    "Foque exclusivamente nos argumentos lógicos e dados concretos.",
+    "Crie uma conexão emocional e faça a outra parte sentir que você valoriza suas ideias.",
+    "Evite qualquer conexão emocional e mantenha-se impessoal e distante.",
+    "Use argumentos complicados para confundir e ganhar vantagem."
+  ]
+},
+{
+  "word": "Você está tentando conquistar a confiança de uma pessoa influente. Como usar a sedução intelectual a seu favor?",
+  "correct": "Mostre interesse genuíno pelos seus pensamentos e demonstre conhecimento na área dela.",
+  "options": [
+    "Corrija as falhas em seus argumentos para parecer mais inteligente.",
+    "Elogie suas ideias constantemente, mesmo que não concorde com elas.",
+    "Demonstre interesse genuíno pelos seus pensamentos e complemente com insights profundos.",
+    "Evite se aprofundar nos tópicos e mantenha a conversa leve."
+  ]
+},
+{
+  "word": "Em um ambiente social, como você pode usar a sedução intelectual para se destacar?",
+  "correct": "Inicie conversas sobre temas envolventes e faça os outros se sentirem inteligentes e valorizados.",
+  "options": [
+    "Imponha suas ideias, garantindo que as pessoas vejam seu intelecto superior.",
+    "Inicie discussões sobre temas complexos, destacando sua inteligência.",
+    "Faça perguntas intrigantes e faça os outros se sentirem valorizados e interessantes.",
+    "Foque em debates acalorados para mostrar sua superioridade intelectual."
+  ]
+},
+{
+  "word": "Como um sedutor intelectual lida com a resistência ou desacordo em uma conversa?",
+  "correct": "Usa a empatia para suavizar a resistência e reformula a conversa com delicadeza.",
+  "options": [
+    "Insiste firmemente em sua opinião até convencer o outro.",
+    "Ignora a resistência e continua a expor seus argumentos.",
+    "Utiliza empatia para entender a resistência e suaviza a conversa com delicadeza.",
+    "Abandona a conversa ao perceber resistência, evitando o confronto."
+  ]
+},
+{
+  "word": "Como você pode usar a sedução intelectual para influenciar um grupo de pessoas?",
+  "correct": "Fale com confiança e envolva os membros, fazendo-os sentir que suas ideias são valiosas.",
+  "options": [
+    "Imponha suas ideias e mantenha uma posição de autoridade durante toda a conversa.",
+    "Fale com confiança, mas evite interagir diretamente com os membros do grupo.",
+    "Mantenha o controle da conversa e faça o grupo acreditar que suas ideias são valiosas.",
+    "Fale com confiança e envolva os outros, valorizando suas contribuições."
+  ]
+},
+{
+  "word": "Você está em uma discussão pública e quer usar a sedução intelectual para ganhar aliados. O que fazer?",
+  "correct": "Envolva os participantes e use o humor inteligente para conquistar o público.",
+  "options": [
+    "Use argumentos complexos e acadêmicos para impressionar os outros.",
+    "Envolva o público com perguntas e use humor inteligente para ganhar simpatia.",
+    "Mantenha-se distante e deixe que os outros tirem suas próprias conclusões.",
+    "Seja assertivo e não dê espaço para as outras pessoas contribuírem."
+  ]
+}
+
+   
+
+
+        ];
+
+        let currentQuestionIndex = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+
+        function shuffleOptions(options) {
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            return options;
+        }
+
+        function checkAnswer(selected, correct) {
+            return selected === correct;
+        }
+
+        function showNextButton() {
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function hideNextButton() {
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            updateQuestion();
+            hideNextButton();
+        }
+
+        function updateQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            document.getElementById("question").innerText = `"${currentQuestion.word}"?`;
+
+            // Ensure the correct answer is always included in the options
+            const options = [...currentQuestion.options, currentQuestion.correct];
+            const shuffledOptions = shuffleOptions(options);
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement("button");   
+
+                button.innerText = option;   
+
+                button.className = "button";
+                button.onclick = function () {
+                    if (checkAnswer(option, currentQuestion.correct)) {
+                        correctCount++;
+                        button.classList.add("correct");
+                    } else {
+                        wrongCount++;
+                        // Highlight the correct answer
+                        const correctButton = Array.from(optionsContainer.children).find(btn => btn.innerText === currentQuestion.correct);
+                        if (correctButton) {
+                            correctButton.classList.add("correct");
+                        }
+                    }
+                    showNextButton();
+                    document.getElementById("score").innerText = `Acertos: ${correctCount} | Erros: ${wrongCount}`;
+                    // Disable all buttons after choice
+                    Array.from(optionsContainer.children).forEach(btn => {
+                        btn.onclick = null;
+                    });
+                };
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Start the quiz
+        updateQuestion();
+    </script>
+</body>
+</html>

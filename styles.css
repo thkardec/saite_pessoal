@@ -1,0 +1,200 @@
+/* Importando a fonte do Google */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu {
+    position: fixed; /* Fixa o menu no topo */
+    top: 0;
+    left: 0;
+    width: 100%; /* O menu ocupa toda a largura da tela */
+    height: 30px; /* Altura reduzida para ocupar menos espaço */
+    background-color: rgba(255, 255, 255, 0.829); /* Transparência no fundo */
+    z-index: 1000; /* Garante que o menu fique acima de outros elementos */
+    text-align: center; /* Centraliza o conteúdo no menu */
+    padding: 0; /* Remove padding para colar o texto no topo */
+    margin: 0; /* Remove margens para colar o texto no topo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Adiciona uma leve sombra */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transição suave */
+    display: flex; /* Flexbox para alinhamento */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    align-items: center; /* Centraliza os itens verticalmente */
+}
+
+.menu:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* Aumenta a opacidade ao passar o mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Aumenta a sombra ao passar o mouse */
+}
+
+.menu ul {
+    list-style-type: none; /* Remove os marcadores da lista */
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    display: inline-block; /* Coloca os itens do menu em linha */
+    margin-right: 10px; /* Espaçamento mínimo entre os itens */
+}
+
+.menu a {
+    text-decoration: none; /* Remove o sublinhado dos links */
+    color: #000000; /* Cor dos links */
+    font-weight: 500;
+    font-size: 12px; /* Fonte ainda menor */
+    padding: 0 5px; /* Mínima distância entre o texto e as bordas laterais */
+    line-height: 30px; /* Alinha verticalmente no centro da barra */
+    transition: color 0.2s, transform 0.2s;
+}
+
+.menu a:hover {
+    color: #0056b3; /* Cor ao passar o mouse */
+    transform: translateY(-2px); /* Efeito de elevação */
+}
+
+.container {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 40px; /* Espaçamento menor para evitar sobreposição do menu fixo */
+    padding: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Layout responsivo */
+    gap: 20px;
+}
+
+.grid-item {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-item img {
+    max-width: 80%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.grid-item a {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.grid-item:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+#outros {
+    background-color: #f7f7f7;
+}
+
+/* Estilos para seções adicionais */
+.section {
+    background-color: #f9f9f9; /* Cor de fundo leve para seções */
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0; /* Margem vertical entre seções */
+}
+
+.section h2 {
+    font-size: 24px; /* Tamanho do título */
+    margin-bottom: 10px; /* Espaçamento abaixo do título */
+    color: #0056b3; /* Cor do título */
+}
+
+.section p {
+    font-size: 14px; /* Tamanho do texto do parágrafo */
+    line-height: 1.6; /* Espaçamento entre linhas */
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr; /* Mantém em coluna única em telas pequenas */
+    }
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#quiz-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#question {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+#options {
+    margin-bottom: 20px;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.correct {
+    background-color: #28a745;
+}
+
+.wrong {
+    background-color: #dc3545;
+}
+
+#score, #timer {
+    font-size: 1em;
+    text-align: center;
+}

@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Terapia Cognitivo-Comportamental</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+        }
+        #quiz-container {
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #options {
+            margin: 20px 0;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button.correct {
+            background-color: #28a745; /* Verde */
+        }
+        #next-btn {
+            display: none;
+        }
+        #score {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Quiz</h1>
+        <p id="question"></p>
+        <div id="options"></div>
+        <p id="score">Acertos: 0 | Erros: 0</p>
+        <button id="next-btn" class="button" onclick="nextQuestion()">Próxima</button>
+    </div>
+
+    <script>
+        const questions = [
+
+
+
+
+
+
+
+    
+        {
+  "word": "Qual é o principal objetivo da filosofia estoica?",
+  "correct": "Desenvolver virtudes e aceitar os eventos com serenidade.",
+  "options": [
+    "Buscar o prazer e evitar a dor",
+    "Acumular riqueza e poder",
+    "Buscar reconhecimento social",
+    "Alcançar a felicidade através da sorte"
+  ]
+},
+{
+  "word": "Qual dos seguintes é um dos quatro pilares da filosofia estoica?",
+  "correct": "Sabedoria",
+  "options": [
+    "Coragem",
+    "Riqueza",
+    "Ambição",
+    "Alegria"
+  ]
+},
+{
+  "word": "Segundo os estoicos, o que está sob o nosso controle?",
+  "correct": "Nossas atitudes e ações.",
+  "options": [
+    "Os eventos externos",
+    "As atitudes das outras pessoas",
+    "O futuro",
+    "O comportamento dos outros"
+  ]
+},
+{
+  "word": "Qual filósofo é conhecido como um dos maiores representantes do estoicismo?",
+  "correct": "Epicteto",
+  "options": [
+    "Aristóteles",
+    "Platão",
+    "Sócrates",
+    "Nietzsche"
+  ]
+},
+{
+  "word": "Como os estoicos enxergam a morte?",
+  "correct": "Como parte natural da vida que deve ser aceita.",
+  "options": [
+    "Como um evento trágico e a ser temido",
+    "Como o fim de tudo",
+    "Como algo que deve ser evitado a todo custo",
+    "Como uma oportunidade para renascimento"
+  ]
+},
+{
+  "word": "Qual é a principal prática recomendada pelos estoicos para lidar com as emoções negativas?",
+  "correct": "Refletir racionalmente sobre a situação.",
+  "options": [
+    "Ignorar completamente as emoções",
+    "Desabafar com alguém próximo",
+    "Evitar situações estressantes",
+    "Buscar distrações imediatas"
+  ]
+},
+{
+  "word": "Como os estoicos definem a 'virtude'?",
+  "correct": "A excelência moral e o alinhamento com a razão.",
+  "options": [
+    "A prática da religião",
+    "A capacidade de acumular bens materiais",
+    "A busca por prazer",
+    "A obediência às leis sociais"
+  ]
+},
+{
+  "word": "Qual filósofo romano é considerado um dos principais defensores do estoicismo?",
+  "correct": "Sêneca",
+  "options": [
+    "Cícero",
+    "Lucrécio",
+    "Júlio César",
+    "Horácio"
+  ]
+},
+{
+  "word": "O que significa o conceito estoico de 'Amor Fati'?",
+  "correct": "Amar o destino e aceitar o que acontece.",
+  "options": [
+    "Buscar controlar o destino a todo custo",
+    "Amar somente aquilo que traz felicidade",
+    "Resistir ao destino e tentar mudá-lo",
+    "Ignorar o destino e focar apenas no presente"
+  ]
+},
+{
+  "word": "Segundo os estoicos, o que é a verdadeira felicidade?",
+  "correct": "Viver em conformidade com a virtude.",
+  "options": [
+    "Conquistar o sucesso financeiro",
+    "Buscar prazeres e evitar dores",
+    "Ter controle sobre tudo ao redor",
+    "Receber reconhecimento dos outros"
+  ]
+},
+{
+  "word": "Como os estoicos sugerem que devemos lidar com o sofrimento?",
+  "correct": "Encará-lo com aceitação e resiliência.",
+  "options": [
+    "Evitar qualquer tipo de dor",
+    "Buscar culpados para o sofrimento",
+    "Desistir e aceitar a derrota",
+    "Afastar-se de todos para não sofrer"
+  ]
+},
+{
+  "word": "O que os estoicos acreditam ser a causa do sofrimento humano?",
+  "correct": "O apego às coisas que estão fora de nosso controle.",
+  "options": [
+    "A falta de bens materiais",
+    "O comportamento das outras pessoas",
+    "O destino inevitável",
+    "A ausência de poder e status"
+  ]
+},
+{
+  "word": "Qual é a visão estoica sobre as coisas materiais?",
+  "correct": "Elas são indiferentes e não contribuem para a verdadeira felicidade.",
+  "options": [
+    "São essenciais para o bem-estar",
+    "Devem ser buscadas com intensidade",
+    "Proporcionam a única forma de satisfação",
+    "São mais importantes que virtudes"
+  ]
+}
+,
+{
+  "word": "Segundo os estoicos, o que significa 'ataraxia'?",
+  "correct": "Tranquilidade da mente e ausência de perturbação.",
+  "options": [
+    "Um estado de felicidade constante",
+    "A capacidade de controlar os outros",
+    "A indiferença completa aos sentimentos",
+    "A busca por prazeres intelectuais"
+  ]
+},
+{
+  "word": "O que os estoicos acreditam ser o maior bem que alguém pode alcançar?",
+  "correct": "A virtude.",
+  "options": [
+    "O poder político",
+    "A fama e o reconhecimento",
+    "A riqueza material",
+    "A satisfação dos desejos"
+  ]
+},
+{
+  "word": "Como os estoicos encaram os eventos negativos que acontecem na vida?",
+  "correct": "Como oportunidades para praticar virtude.",
+  "options": [
+    "Como castigos do destino",
+    "Como fracassos pessoais",
+    "Como consequências da má sorte",
+    "Como algo a ser evitado a todo custo"
+  ]
+},
+{
+  "word": "Segundo o estoicismo, o que devemos fazer diante de situações incontroláveis?",
+  "correct": "Aceitar com serenidade o que não podemos mudar.",
+  "options": [
+    "Lutar contra a situação até o fim",
+    "Ignorar a situação completamente",
+    "Buscar apoio externo para superá-la",
+    "Tentar controlar todos os aspectos envolvidos"
+  ]
+},
+{
+  "word": "O que o conceito estoico de 'apatheia' significa?",
+  "correct": "Ausência de paixões descontroladas.",
+  "options": [
+    "Falta de interesse pela vida",
+    "Indiferença a todos os sentimentos",
+    "Superação completa das emoções",
+    "Repressão das emoções positivas"
+  ]
+},
+{
+  "word": "Quem foi o fundador da escola estoica?",
+  "correct": "Zenão de Cítio",
+  "options": [
+    "Sêneca",
+    "Epicteto",
+    "Marco Aurélio",
+    "Cícero"
+  ]
+},
+{
+  "word": "Qual era a visão estoica sobre a natureza?",
+  "correct": "Devemos viver em harmonia com a natureza.",
+  "options": [
+    "A natureza deve ser controlada e dominada",
+    "Devemos nos isolar da natureza",
+    "A natureza não tem relação com a vida humana",
+    "Devemos ser indiferentes à natureza"
+  ]
+},
+{
+  "word": "Qual é o ensinamento fundamental dos estoicos sobre o controle?",
+  "correct": "Devemos focar apenas no que podemos controlar.",
+  "options": [
+    "Tudo pode ser controlado se tentarmos o suficiente",
+    "Devemos controlar os outros para ter uma vida feliz",
+    "O destino é controlável através de ações corretas",
+    "Nada está sob nosso controle"
+  ]
+},
+{
+  "word": "Qual a relação dos estoicos com as emoções?",
+  "correct": "As emoções devem ser gerenciadas pela razão.",
+  "options": [
+    "As emoções devem ser suprimidas completamente.",
+    "As emoções são irrelevantes e devem ser ignoradas.",
+    "Devemos agir impulsivamente de acordo com as emoções.",
+    "As emoções devem ser controladas através de rituais."
+  ]
+},
+{
+  "word": "Segundo os estoicos, como devemos reagir à perda?",
+  "correct": "Aceitar a perda como parte natural da vida.",
+  "options": [
+    "Tentar evitar a perda a qualquer custo.",
+    "Focar na vingança contra quem causou a perda.",
+    "Acreditar que a perda é um sinal de fraqueza.",
+    "Rejeitar qualquer pensamento sobre a perda."
+  ]
+},
+{
+  "word": "Qual era a opinião dos estoicos sobre a riqueza e o status social?",
+  "correct": "Eles são indiferentes, e a virtude é o que realmente importa.",
+  "options": [
+    "Riqueza e status são essenciais para uma vida plena.",
+    "Eles devem ser buscados ativamente.",
+    "São sinais de favor divino e devem ser valorizados.",
+    "São obstáculos para alcançar a felicidade verdadeira."
+  ]
+},
+{
+  "word": "O que significa o princípio estoico de 'memento mori'?",
+  "correct": "Lembrar da morte para viver com mais propósito.",
+  "options": [
+    "Esquecer da morte para não sofrer.",
+    "Viver como se a morte nunca fosse chegar.",
+    "Temer a morte para prolongar a vida.",
+    "Evitar qualquer pensamento sobre a morte."
+  ]
+},
+{
+  "word": "Como Marco Aurélio, um imperador romano, aplicava o estoicismo em sua vida?",
+  "correct": "Praticava o desapego e aceitava seu destino com serenidade.",
+  "options": [
+    "Utilizava o poder para garantir sua felicidade.",
+    "Evitava as responsabilidades para buscar o prazer.",
+    "Acumulava riquezas para se proteger do sofrimento.",
+    "Tomava decisões baseadas apenas em suas emoções."
+  ]
+},
+{
+  "word": "Como os estoicos sugerem lidar com a crítica ou insultos?",
+  "correct": "Aceitar com calma e refletir se há algo a aprender com eles.",
+  "options": [
+    "Revidar para defender sua honra.",
+    "Ignorar completamente e não prestar atenção.",
+    "Buscar vingança para punir quem insultou.",
+    "Evitar qualquer interação com quem critica."
+  ]
+},
+{
+  "word": "De acordo com o estoicismo, como devemos tratar outras pessoas?",
+  "correct": "Com bondade e justiça, independentemente de como agem.",
+  "options": [
+    "Apenas com reciprocidade, tratando bem apenas quem nos trata bem.",
+    "Com indiferença, já que não podemos controlar os outros.",
+    "Com rigor, para que aprendam a respeitar.",
+    "De forma superior, já que a virtude nos coloca acima dos outros."
+  ]
+},
+{
+  "word": "Segundo o estoicismo, o que deve ser priorizado nas decisões da vida?",
+  "correct": "A virtude e a razão.",
+  "options": [
+    "O sucesso material.",
+    "O prazer imediato.",
+    "A aprovação social.",
+    "Os sentimentos pessoais."
+  ]
+}
+,
+{
+  "word": "O que é ataraxia no contexto do estoicismo?",
+  "correct": "Tranquilidade mental e ausência de perturbação.",
+  "options": [
+    "Felicidade extrema e constante.",
+    "Indiferença total aos sentimentos dos outros.",
+    "Rejeição das emoções e prazeres.",
+    "Controle completo sobre o ambiente externo."
+  ]
+},
+{
+  "word": "Como os estoicos acreditam que se alcança a ataraxia?",
+  "correct": "Praticando a virtude e aceitando o que não podemos controlar.",
+  "options": [
+    "Evitando interações com outras pessoas.",
+    "Acumulando bens materiais e status social.",
+    "Suprimindo todas as emoções, boas ou ruins.",
+    "Dominando as outras pessoas e o ambiente."
+  ]
+},
+{
+  "word": "Qual é a relação entre ataraxia e as emoções negativas, segundo o estoicismo?",
+  "correct": "Ataraxia é o estado em que emoções negativas não nos perturbam.",
+  "options": [
+    "Ataraxia significa eliminar completamente todas as emoções.",
+    "É a indiferença absoluta a qualquer tipo de emoção.",
+    "Significa transformar emoções negativas em positivas.",
+    "Significa reprimir qualquer emoção negativa imediatamente."
+  ]
+},
+{
+  "word": "Em quais outras escolas de pensamento a ataraxia também é um conceito central?",
+  "correct": "Epicurismo e ceticismo.",
+  "options": [
+    "Platonismo e aristotelismo.",
+    "Cristianismo e budismo.",
+    "Nihilismo e hedonismo.",
+    "Empirismo e racionalismo."
+  ]
+},
+{
+  "word": "No estoicismo, qual a relação entre a ataraxia e os desejos?",
+  "correct": "A ataraxia é alcançada ao reduzir os desejos aos essenciais.",
+  "options": [
+    "É alcançada ao satisfazer todos os desejos materiais.",
+    "Os desejos são irrelevantes e devem ser ignorados.",
+    "Significa eliminar completamente todos os desejos.",
+    "A ataraxia vem do desejo de viver em solidão."
+  ]
+},
+{
+  "word": "Por que ataraxia é importante para os estoicos?",
+  "correct": "Porque permite uma vida de paz interior, mesmo em meio a adversidades.",
+  "options": [
+    "Porque leva a uma vida de prazeres e felicidade imediata.",
+    "Porque ajuda a controlar os outros ao seu redor.",
+    "Porque elimina qualquer tipo de responsabilidade pessoal.",
+    "Porque garante a satisfação de todos os desejos e prazeres."
+  ]
+},
+{
+  "word": "O que diferencia a ataraxia estoica da ataraxia epicurista?",
+  "correct": "Os estoicos buscam ataraxia através da aceitação do destino e da virtude, enquanto os epicuristas a buscam evitando a dor e o sofrimento.",
+  "options": [
+    "Os estoicos buscam ataraxia através de prazeres físicos, enquanto os epicuristas rejeitam todos os prazeres.",
+    "Os estoicos acreditam que a ataraxia é inatingível, enquanto os epicuristas acreditam que ela é alcançada com riqueza.",
+    "Os estoicos alcançam ataraxia controlando o ambiente, enquanto os epicuristas buscam isolamento completo.",
+    "Os estoicos não acreditam em ataraxia, enquanto os epicuristas a consideram um estado de paz temporário."
+  ]
+},
+{
+  "word": "Qual prática estoica é considerada essencial para alcançar ataraxia?",
+  "correct": "A prática do desapego dos resultados e do autocontrole emocional.",
+  "options": [
+    "A busca constante por prazeres imediatos.",
+    "O acúmulo de riquezas e status social.",
+    "A supressão de todas as emoções.",
+    "A rejeição completa das relações interpessoais."
+  ]
+}
+,
+{
+  "word": "Você recebe críticas duras no trabalho. Qual seria a reação estoica adequada?",
+  "correct": "Refletir sobre as críticas e ver se há algo a aprender delas, sem se deixar levar pela emoção.",
+  "options": [
+    "Ficar ofendido e confrontar a pessoa que criticou.",
+    "Ignorar completamente as críticas, achando que não importam.",
+    "Analisar as críticas e ver se têm fundamento, aceitando a possibilidade de erro.",
+    "Reagir com raiva e planejar uma vingança."
+  ]
+},
+{
+  "word": "Você perde um objeto valioso que tinha um grande significado emocional. O que um estoico faria?",
+  "correct": "Aceitar a perda como parte da vida e não se apegar a objetos materiais.",
+  "options": [
+    "Ficar obcecado em encontrar o objeto a todo custo.",
+    "Reclamar com amigos sobre a injustiça de ter perdido o que amava.",
+    "Aceitar a perda, lembrando que o valor estava nas memórias, não no objeto.",
+    "Comprar um novo objeto para substituir imediatamente o que foi perdido."
+  ]
+},
+{
+  "word": "Você se depara com uma situação estressante no trânsito. Qual seria a atitude estoica?",
+  "correct": "Manter a calma, aceitar que o trânsito é algo fora do seu controle e usar o tempo para refletir ou ouvir um podcast.",
+  "options": [
+    "Buzinar e xingar outros motoristas para expressar a frustração.",
+    "Ficar irritado e pensar em como a vida é injusta.",
+    "Aceitar a situação e focar em algo produtivo ou relaxante enquanto espera.",
+    "Descer do carro e reclamar com os outros motoristas."
+  ]
+},
+{
+  "word": "Você recebe uma promoção no trabalho, mas um colega expressa descontentamento. Como um estoico agiria?",
+  "correct": "Agradeceria pela promoção, mas reconheceria o esforço do colega e procuraria apoiá-lo.",
+  "options": [
+    "Desdenhar do colega por sua inveja e se alegrar com a promoção.",
+    "Ignorar o descontentamento do colega, já que a promoção é só sua.",
+    "Aproveitar a oportunidade para incentivar o colega e oferecer ajuda.",
+    "Falar mal do colega para outros, para aumentar sua própria imagem."
+  ]
+},
+{
+  "word": "Um amigo lhe decepciona ao não cumprir uma promessa. Qual seria a abordagem estoica?",
+  "correct": "Reconhecer que as pessoas são imperfeitas e não deixar que isso afete sua paz de espírito.",
+  "options": [
+    "Ficar muito bravo e confrontar o amigo.",
+    "Cortar a amizade imediatamente por causa da decepção.",
+    "Refletir sobre a natureza humana e entender que todos podem falhar.",
+    "Achar que o amigo não vale a pena e falar mal dele para outros."
+  ]
+},
+{
+  "word": "Você planejou um evento, mas o tempo estraga seus planos. O que um estoico faria?",
+  "correct": "Aceitar as condições climáticas como algo fora do controle e adaptar os planos para aproveitar o momento.",
+  "options": [
+    "Desesperar e se frustrar, culpando o clima por estragar seus planos.",
+    "Ignorar o clima e insistir em continuar com o evento.",
+    "Aceitar a situação e usar o tempo para relaxar ou fazer algo diferente.",
+    "Falar mal do clima e lamentar o que não pode ser mudado."
+  ]
+},
+{
+  "word": "Você se depara com uma crítica nas redes sociais. Como um estoico reagiria?",
+  "correct": "Analisaria a crítica com objetividade, decidindo se é construtiva, e ignoraria comentários negativos sem fundamento.",
+  "options": [
+    "Responder imediatamente com raiva e defender-se.",
+    "Ignorar completamente, sem considerar a crítica.",
+    "Refletir sobre a crítica, aprender com ela se possível, e deixar passar o restante.",
+    "Fazer uma postagem negativa sobre quem criticou."
+  ]
+},
+{
+  "word": "Ao se preparar para uma apresentação importante, você fica nervoso. Qual seria a resposta estoica?",
+  "correct": "Reconhecer o nervosismo como uma emoção natural e focar na preparação e no que está sob seu controle.",
+  "options": [
+    "Deixar que o nervosismo o impeça de fazer a apresentação.",
+    "Desistir de fazer a apresentação para evitar o desconforto.",
+    "Aceitar o nervosismo e usar a energia para melhorar a apresentação.",
+    "Fingir que não está nervoso, mas se preparar de forma inadequada."
+  ]
+}
+,
+{
+  "word": "Você tem um dia cheio de compromissos e um deles é cancelado. Qual seria a atitude estoica?",
+  "correct": "Aceitar o cancelamento como parte da vida e usar o tempo livre para algo produtivo ou relaxante.",
+  "options": [
+    "Ficar frustrado e reclamar da falta de compromisso dos outros.",
+    "Reagrupar todos os outros compromissos para encher o tempo livre.",
+    "Aceitar e usar o tempo para descansar ou se preparar para os próximos compromissos.",
+    "Ignorar o cancelamento e continuar pensando apenas na agenda anterior."
+  ]
+},
+{
+  "word": "Você testemunha alguém sendo tratado injustamente. O que um estoico faria?",
+  "correct": "Refletir sobre a situação e, se possível, intervir de forma construtiva, mas sem se deixar levar pela emoção.",
+  "options": [
+    "Ignorar a situação e se afastar para não se envolver.",
+    "Ficar indignado e reclamar com todos sobre a injustiça.",
+    "Tentar ajudar a pessoa de maneira calma e racional, buscando uma solução.",
+    "Fazer uma cena para que todos notem a injustiça."
+  ]
+},
+{
+  "word": "Você planejou uma viagem, mas imprevistos ocorrem e você precisa cancelá-la. Qual seria a resposta estoica?",
+  "correct": "Aceitar a situação, entender que imprevistos acontecem e planejar outra atividade.",
+  "options": [
+    "Desesperar-se e lamentar o cancelamento incessantemente.",
+    "Planejar uma viagem alternativa que se encaixe melhor nas novas circunstâncias.",
+    "Ficar irritado e culpar as circunstâncias por não ter conseguido viajar.",
+    "Tentar fazer a viagem de qualquer forma, desconsiderando os imprevistos."
+  ]
+},
+{
+  "word": "Você se depara com uma situação de conflito entre amigos. Como um estoico reagiria?",
+  "correct": "Ouvir ambos os lados, tentar entender a situação e agir de forma imparcial para ajudar na resolução.",
+  "options": [
+    "Tomar partido de um dos amigos imediatamente.",
+    "Ignorar a situação e deixar que eles se resolvam sozinhos.",
+    "Falar mal de um dos amigos para o outro, para ganhar simpatia.",
+    "Tentar mediar a situação de maneira calma e construtiva."
+  ]
+},
+{
+  "word": "Você está em uma discussão e a outra pessoa começa a gritar. Qual seria a resposta estoica?",
+  "correct": "Manter a calma e responder de forma racional, sem se deixar levar pela emoção.",
+  "options": [
+    "Gritar de volta para tentar se fazer ouvir.",
+    "Ficar em silêncio, mas se sentir ofendido.",
+    "Tentar acalmar a outra pessoa e focar no ponto da discussão.",
+    "Sair da conversa, sentindo que não vale a pena."
+  ]
+},
+{
+  "word": "Você recebe um feedback negativo em uma avaliação de desempenho. O que um estoico faria?",
+  "correct": "Analisar o feedback objetivamente, considerando como pode melhorar e não se deixar levar por emoções negativas.",
+  "options": [
+    "Ficar magoado e pensar em deixar o emprego.",
+    "Desconsiderar o feedback completamente, pensando que não é válido.",
+    "Refletir sobre o feedback e fazer um plano de ação para melhorar.",
+    "Reagir defensivamente e justificar cada ponto do feedback."
+  ]
+},
+{
+  "word": "Você se encontra em um debate sobre um assunto polêmico e a conversa fica acalorada. Qual seria a atitude estoica?",
+  "correct": "Manter a calma, escutar atentamente e responder de forma ponderada, sem se deixar levar pela emoção.",
+  "options": [
+    "Ficar cada vez mais irritado e interromper os outros.",
+    "Desistir da conversa, achando que não vale a pena discutir.",
+    "Continuar debatendo com respeito, buscando um entendimento mútuo.",
+    "Fazer uma piada para aliviar a tensão, mas desviar do assunto."
+  ]
+},
+{
+  "word": "Você enfrenta uma situação financeira difícil e precisa cortar despesas. Como um estoico agiria?",
+  "correct": "Aceitar a situação como temporária e ajustar o orçamento, focando no que é realmente necessário.",
+  "options": [
+    "Entrar em pânico e gastar ainda mais tentando manter o estilo de vida.",
+    "Ignorar a situação e continuar com os mesmos gastos.",
+    "Fazer um plano detalhado para reduzir despesas e se adaptar.",
+    "Culpar outras pessoas pela situação financeira."
+  ]
+},
+{
+  "word": "Você está enfrentando um projeto no trabalho que parece impossível de concluir. Qual seria a atitude estoica?",
+  "correct": "Dividir o projeto em etapas menores e lidar com cada uma delas, focando no que está sob seu controle.",
+  "options": [
+    "Desistir do projeto e se sentir derrotado.",
+    "Deixar de lado e esperar que alguém mais resolva.",
+    "Focar nas etapas do projeto e buscar soluções para cada parte.",
+    "Reclamar para os colegas sobre a dificuldade sem tomar ações."
+  ]
+},
+{
+  "word": "Você se machuca durante um treino e precisa interromper sua rotina. Como um estoico reagiria?",
+  "correct": "Aceitar a lesão como uma parte natural do treinamento e se concentrar na recuperação.",
+  "options": [
+    "Ficar frustrado e desistir de se exercitar completamente.",
+    "Ignorar a dor e continuar treinando, arriscando mais lesões.",
+    "Focar na reabilitação e pensar em como adaptar a rotina de exercícios.",
+    "Reclamar sobre a lesão e se lamentar pelo tempo perdido."
+  ]
+},
+{
+  "word": "Você ouve boatos sobre você no trabalho. O que seria a abordagem estoica?",
+  "correct": "Não se deixar afetar pelos boatos e focar em seu trabalho e nos feedbacks construtivos.",
+  "options": [
+    "Desmentir os boatos imediatamente e confrontar quem os espalhou.",
+    "Ignorar completamente e não se preocupar com a situação.",
+    "Refletir sobre os boatos, mas continuar se concentrando em seu trabalho.",
+    "Ficar obcecado em descobrir quem está espalhando os boatos."
+  ]
+},
+{
+  "word": "Você se depara com uma tarefa que não gosta de fazer. Qual seria a atitude estoica?",
+  "correct": "Reconhecer que a tarefa é necessária e completá-la com um espírito de aceitação.",
+  "options": [
+    "Evitar a tarefa e deixar que outra pessoa a faça.",
+    "Fazer a tarefa reclamando e se lamentando o tempo todo.",
+    "Completar a tarefa com a consciência de que ela faz parte de suas responsabilidades.",
+    "Procrastinar e esperar até o último momento para fazê-la."
+  ]
+},
+{
+  "word": "Um amigo se afasta de você sem explicação. Como um estoico lidaria com isso?",
+  "correct": "Aceitar a decisão do amigo e refletir sobre a relação, sem se deixar levar pela ansiedade.",
+  "options": [
+    "Ficar obcecado em descobrir o que aconteceu.",
+    "Reclamar com outros amigos sobre o afastamento.",
+    "Respeitar o espaço do amigo e dar tempo para que ele possa voltar.",
+    "Tomar isso como uma traição e cortar o amigo da sua vida."
+  ]
+},
+{
+  "word": "Você tem uma oportunidade de emprego, mas precisa mudar de cidade. O que um estoico faria?",
+  "correct": "Avaliar a oportunidade com calma, considerando os prós e contras, e decidir baseado em razão.",
+  "options": [
+    "Recusar a oportunidade por medo da mudança.",
+    "Aceitar a oferta sem pensar, apenas pela animação.",
+    "Analisar a situação, considerando a mudança como uma chance de crescimento.",
+    "Criticar a mudança e se lamentar por ter que deixar sua cidade."
+  ]
+},
+{
+  "word": "Você se sente sobrecarregado por responsabilidades familiares. Qual seria a abordagem estoica?",
+  "correct": "Reconhecer a sobrecarga, priorizar as tarefas e buscar um equilíbrio saudável.",
+  "options": [
+    "Ignorar as responsabilidades e deixar tudo acumular.",
+    "Ficar estressado e reclamar constantemente.",
+    "Fazer uma lista das responsabilidades e delegar o que for possível.",
+    "Sair de casa e evitar qualquer responsabilidade."
+  ]
+},
+{
+  "word": "Você está passando por uma fase de estresse intenso no trabalho. Como um estoico lidaria com isso?",
+  "correct": "Reconhecer o estresse, fazer pausas regulares e aplicar técnicas de relaxamento.",
+  "options": [
+    "Negligenciar o estresse e continuar trabalhando até se esgotar.",
+    "Ficar ansioso e se preocupar cada vez mais com as demandas.",
+    "Reconhecer a situação e buscar maneiras de reduzir a carga de trabalho.",
+    "Reclamar para todos sobre o estresse, sem buscar soluções."
+  ]
+}
+,{
+  "word": "Você encontra alguém que discorda fortemente de suas opiniões em uma conversa. Qual seria a atitude estoica?",
+  "correct": "Ouvir atentamente o ponto de vista do outro, mantendo a calma e respeitando a diferença de opiniões.",
+  "options": [
+    "Interromper a pessoa e insistir que você está certo.",
+    "Ficar ofendido e encerrar a conversa imediatamente.",
+    "Escutar com mente aberta e considerar a possibilidade de aprender algo novo.",
+    "Fazer comentários sarcásticos para desmerecer a opinião do outro."
+  ]
+},
+{
+  "word": "Um projeto no trabalho não sai como planejado e você é responsabilizado. Como um estoico reagiria?",
+  "correct": "Aceitar a responsabilidade e buscar soluções, em vez de se culpar ou culpar os outros.",
+  "options": [
+    "Ficar indignado e culpar a equipe pela falha.",
+    "Ignorar a situação e deixar que os outros lidem com as consequências.",
+    "Refletir sobre o que deu errado e como evitar repetir o erro.",
+    "Reagir defensivamente e tentar se justificar o tempo todo."
+  ]
+},
+{
+  "word": "Você recebe críticas construtivas de seu chefe. O que seria a abordagem estoica?",
+  "correct": "Analisar as críticas objetivamente e usar como uma oportunidade de crescimento.",
+  "options": [
+    "Desconsiderar as críticas porque não concorda com elas.",
+    "Ficar na defensiva e tentar justificar seu trabalho.",
+    "Agradecer pelas críticas e refletir sobre como melhorar.",
+    "Ficar chateado e pensar em deixar o emprego."
+  ]
+},
+{
+  "word": "Você se vê em uma situação em que alguém precisa de ajuda, mas isso vai atrasar seus planos. Como um estoico agiria?",
+  "correct": "Avaliar a situação e decidir ajudar, sabendo que a compaixão é uma virtude importante.",
+  "options": [
+    "Ignorar a pessoa e continuar com seus próprios planos.",
+    "Ajudar, mas reclamar sobre o atraso depois.",
+    "Decidir ajudar, considerando que pode ser uma oportunidade de mostrar solidariedade.",
+    "Ficar irritado por ter que mudar seus planos."
+  ]
+},
+{
+  "word": "Um amigo lhe pede um favor que vai exigir muito do seu tempo. Como um estoico responderia?",
+  "correct": "Refletir sobre a importância do favor e sua capacidade de ajudar antes de decidir.",
+  "options": [
+    "Recusar imediatamente, sem considerar a situação.",
+    "Aceitar sem pensar, mesmo que isso cause estresse.",
+    "Analisar se você pode ajudar de forma equilibrada sem prejudicar suas próprias responsabilidades.",
+    "Sentir-se culpado por não querer ajudar."
+  ]
+},
+{
+  "word": "Você percebe que cometeu um erro em um relatório importante. O que seria a resposta estoica?",
+  "correct": "Assumir a responsabilidade, corrigir o erro e aprender com a experiência.",
+  "options": [
+    "Negar que você fez o erro e tentar culpar os outros.",
+    "Entrar em pânico e ficar se preocupando com as consequências.",
+    "Reconhecer o erro, corrigi-lo e refletir sobre como melhorar no futuro.",
+    "Ficar tão envergonhado que não fala com ninguém até o dia da apresentação."
+  ]
+},
+{
+  "word": "Você tem um colega que sempre chega atrasado e isso o incomoda. Como um estoico lidaria com isso?",
+  "correct": "Aceitar que você não pode controlar o comportamento do outro e focar em sua própria pontualidade.",
+  "options": [
+    "Criticar o colega sempre que ele chega atrasado.",
+    "Ignorar o problema e continuar se sentindo irritado.",
+    "Compreender que cada um tem seu próprio ritmo e focar no que você pode controlar.",
+    "Falar mal do colega para outros membros da equipe."
+  ]
+},
+{
+  "word": "Você planejou um evento especial, mas o clima não está colaborando. Qual seria a atitude estoica?",
+  "correct": "Aceitar que o clima é algo fora do seu controle e encontrar maneiras alternativas de celebrar.",
+  "options": [
+    "Ficar extremamente frustrado e cancelar o evento.",
+    "Reclamar do clima para todos os convidados.",
+    "Adaptar o evento às novas condições climáticas e tentar aproveitá-lo da melhor forma.",
+    "Desistir completamente de comemorar."
+  ]
+}
+,
+{
+  "word": "Você se depara com um atraso no transporte público que o fará chegar tarde a um compromisso importante. Como um estoico lidaria com isso?",
+  "correct": "Aceitar o atraso como um fato fora de seu controle e usar o tempo para relaxar ou refletir.",
+  "options": [
+    "Ficar nervoso e reclamar alto para quem estiver ao redor.",
+    "Desesperar-se e tentar apressar o transporte.",
+    "Usar o tempo para se preparar mentalmente para a reunião.",
+    "Ignorar a situação e sair correndo, arriscando se machucar."
+  ]
+},
+{
+  "word": "Um familiar faz uma crítica negativa a você durante um jantar em família. Qual seria a reação estoica?",
+  "correct": "Manter a calma e refletir sobre a crítica, decidindo se há algo a aprender com ela.",
+  "options": [
+    "Reagir de forma defensiva e discutir com o familiar.",
+    "Ignorar completamente a crítica e mudar de assunto.",
+    "Aceitar a crítica, pensar sobre ela e decidir se é válida.",
+    "Ficar magoado e se afastar do familiar pelo resto da noite."
+  ]
+},
+{
+  "word": "Você planejou um dia relaxante, mas foi interrompido por um problema inesperado. O que um estoico faria?",
+  "correct": "Aceitar a interrupção e encontrar um novo equilíbrio, adaptando o dia conforme necessário.",
+  "options": [
+    "Ficar extremamente frustrado e arruinar o resto do dia.",
+    "Desistir de tudo e se sentir uma vítima da situação.",
+    "Aceitar a mudança e procurar maneiras de fazer o melhor do dia.",
+    "Reclamar sobre a interrupção e não aproveitar o que ainda resta do dia."
+  ]
+},
+{
+  "word": "Você testemunha alguém sendo tratado injustamente em uma situação pública. Como um estoico agiria?",
+  "correct": "Refletir sobre a situação e, se possível, oferecer apoio à pessoa injustiçada de forma respeitosa.",
+  "options": [
+    "Ignorar e continuar seu caminho.",
+    "Ficar indignado e fazer um escândalo.",
+    "Intervir de maneira calma e solidária, se sentir que pode ajudar.",
+    "Falar mal da situação para outras pessoas ao seu redor."
+  ]
+},
+{
+  "word": "Você descobre que não foi escolhido para uma promoção que esperava. Qual seria a resposta estoica?",
+  "correct": "Aceitar a decisão e refletir sobre o que pode melhorar para futuras oportunidades.",
+  "options": [
+    "Ficar amargo e se desmotivar em seu trabalho.",
+    "Reclamar para todos sobre a injustiça da situação.",
+    "Refletir sobre o feedback recebido e o que pode ser melhorado.",
+    "Desistir de buscar promoções no futuro."
+  ]
+},
+{
+  "word": "Você está se preparando para uma apresentação importante, mas sente ansiedade. Como um estoico lidaria com isso?",
+  "correct": "Reconhecer a ansiedade, mas concentrar-se na preparação e na apresentação em si.",
+  "options": [
+    "Deixar a ansiedade dominá-lo e não se apresentar.",
+    "Reclamar com amigos antes da apresentação sobre como está nervoso.",
+    "Aceitar a ansiedade como normal e focar na mensagem que deseja transmitir.",
+    "Procrastinar e deixar a preparação para a última hora."
+  ]
+},
+{
+  "word": "Um amigo faz uma piada de mau gosto sobre você em um grupo. Qual seria a atitude estoica?",
+  "correct": "Manter a calma, rir da situação e não deixar que isso o abale.",
+  "options": [
+    "Ficar ofendido e confrontar o amigo na hora.",
+    "Reagir com raiva e se afastar do grupo.",
+    "Levar na esportiva e não deixar que isso o afete.",
+    "Falar mal do amigo para outros após o ocorrido."
+  ]
+},
+{
+  "word": "Você se depara com uma tarefa que parece monótona e sem sentido. O que seria a abordagem estoica?",
+  "correct": "Reconhecer que todas as tarefas têm seu valor e encontrar significado na execução dela.",
+  "options": [
+    "Ignorar a tarefa e deixá-la inacabada.",
+    "Reclamar sobre a monotonia para os colegas.",
+    "Concentrar-se na tarefa e dar o melhor de si, sabendo que contribui para o todo.",
+    "Desistir completamente da tarefa."
+  ]
+}
+,{
+  "word": "Você acorda de manhã e descobre que o seu plano para o dia foi cancelado. Como um estoico reagiria?",
+  "correct": "Aceitar o cancelamento como uma oportunidade de ajustar seus planos e encontrar algo produtivo a fazer.",
+  "options": [
+    "Ficar chateado e passar o dia de mau humor.",
+    "Reclamar com amigos sobre o que perdeu.",
+    "Aproveitar a nova situação para descansar ou fazer algo diferente.",
+    "Desistir de fazer qualquer coisa pelo resto do dia."
+  ]
+},
+{
+  "word": "Alguém em sua equipe não cumpre suas responsabilidades, impactando o trabalho de todos. Como um estoico lidaria com isso?",
+  "correct": "Concentrar-se em como você pode contribuir para a equipe, sem se deixar afetar pelo comportamento dos outros.",
+  "options": [
+    "Criticar abertamente a pessoa em reuniões.",
+    "Focar em seu próprio trabalho e ignorar a situação.",
+    "Conversar com a pessoa em particular e oferecer ajuda, se apropriado.",
+    "Ficar frustrado e desistir de colaborar com a equipe."
+  ]
+},
+{
+  "word": "Você está tentando aprender uma nova habilidade, mas está tendo dificuldades. Qual seria a atitude estoica?",
+  "correct": "Aceitar que a dificuldade faz parte do processo de aprendizado e persistir na prática.",
+  "options": [
+    "Desistir imediatamente porque não é fácil.",
+    "Ficar frustrado e reclamar sobre a dificuldade.",
+    "Reconhecer que o progresso leva tempo e continuar praticando.",
+    "Comparar-se negativamente com outras pessoas que aprendem mais rápido."
+  ]
+},
+{
+  "word": "Você ouve rumores sobre um colega que não parecem verdadeiros. Como um estoico responderia?",
+  "correct": "Manter a calma, não se deixar levar pelos rumores e avaliar a situação com objetividade.",
+  "options": [
+    "Espalhar os rumores para outras pessoas.",
+    "Ficar chateado e confrontar o colega sem provas.",
+    "Evitar tirar conclusões precipitadas e agir com integridade.",
+    "Ficar obcecado pelos rumores e perder o foco no trabalho."
+  ]
+},
+{
+  "word": "Você enfrenta um contratempo financeiro inesperado. Qual seria a resposta estoica?",
+  "correct": "Aceitar a situação e buscar maneiras de ajustar seu orçamento e prioridades.",
+  "options": [
+    "Entrar em pânico e tomar decisões financeiras impulsivas.",
+    "Ignorar o problema e esperar que se resolva sozinho.",
+    "Avaliar a situação e fazer um plano para lidar com as despesas.",
+    "Reclamar constantemente sobre a situação para amigos e familiares."
+  ]
+},
+{
+  "word": "Durante uma discussão, alguém tenta provocá-lo. O que seria a atitude estoica?",
+  "correct": "Manter a compostura e responder de forma calma e racional, sem se deixar provocar.",
+  "options": [
+    "Responder com insultos para revidar.",
+    "Sair da conversa sem dizer nada.",
+    "Manter a calma e tentar desviar a conversa para algo mais construtivo.",
+    "Ficar extremamente irritado e perder o controle."
+  ]
+},
+{
+  "word": "Você está passando por um período difícil na vida. Como um estoico enfrentaria essa situação?",
+  "correct": "Reconhecer a dor, mas também buscar aprendizado e crescimento a partir da experiência.",
+  "options": [
+    "Negar a dor e tentar agir normalmente.",
+    "Deixar que a situação o consuma e não fazer nada a respeito.",
+    "Refletir sobre o que a situação pode ensinar e procurar apoio.",
+    "Reclamar constantemente sem buscar soluções."
+  ]
+},
+{
+  "word": "Você se sente pressionado a tomar uma decisão rápida sobre um projeto. Qual seria a abordagem estoica?",
+  "correct": "Pausar para avaliar todas as opções com clareza antes de decidir.",
+  "options": [
+    "Tomar uma decisão impulsiva para aliviar a pressão.",
+    "Fugir da responsabilidade e deixar que outra pessoa decida.",
+    "Analisar as consequências e ouvir conselhos antes de agir.",
+    "Reagir com medo e não tomar nenhuma decisão."
+  ]
+}
+,{
+  "word": "Você perdeu um objeto valioso e não consegue encontrá-lo. Como um estoico reagiria?",
+  "correct": "Aceitar a perda e focar na gratidão pelo que ainda possui.",
+  "options": [
+    "Ficar extremamente irritado e culpá-lo por sua própria distração.",
+    "Reclamar com todos sobre a perda e se sentir uma vítima.",
+    "Refletir sobre o que pode aprender com a situação e seguir em frente.",
+    "Desistir de procurar e se deixar levar pela frustração."
+  ]
+},
+{
+  "word": "Um colega de trabalho é promovido em vez de você, apesar de ter trabalhado arduamente. Como um estoico lidaria com isso?",
+  "correct": "Parabenizar o colega e refletir sobre o que pode melhorar para o futuro.",
+  "options": [
+    "Sentir ciúmes e fazer comentários negativos sobre o colega.",
+    "Ficar desmotivado e não se esforçar mais no trabalho.",
+    "Reconhecer o esforço do colega e buscar feedback sobre sua performance.",
+    "Sair da empresa por se sentir injustiçado."
+  ]
+},
+{
+  "word": "Você planejou um dia de descanso, mas é chamado para ajudar um amigo em apuros. Qual seria a atitude estoica?",
+  "correct": "Reconhecer a importância de ajudar os outros e ajustar seus planos com compaixão.",
+  "options": [
+    "Recusar ajudar e priorizar seu próprio descanso.",
+    "Ficar chateado por não poder relaxar como planejava.",
+    "Ajudar o amigo, vendo isso como uma oportunidade de crescimento.",
+    "Ignorar o pedido e continuar focado em si mesmo."
+  ]
+},
+{
+  "word": "Você se depara com uma crítica construtiva sobre seu trabalho. Como um estoico reagiria?",
+  "correct": "Receber a crítica com mente aberta e avaliar se há algo a aprender.",
+  "options": [
+    "Reagir defensivamente e ignorar o feedback.",
+    "Sentir-se mal e desistir de melhorar.",
+    "Agradecer pela crítica e usar como uma oportunidade de crescimento.",
+    "Reclamar com colegas sobre a crítica recebida."
+  ]
+},
+{
+  "word": "Você teve uma discussão acalorada com um amigo. O que seria a resposta estoica?",
+  "correct": "Refletir sobre a discussão, tentar entender a perspectiva do amigo e buscar a reconciliação.",
+  "options": [
+    "Ignorar o amigo e se afastar.",
+    "Continuar a discussão até que um vença.",
+    "Refletir sobre o que foi dito e considerar um pedido de desculpas, se necessário.",
+    "Falar mal do amigo para outros depois da discussão."
+  ]
+},
+{
+  "word": "Você está enfrentando uma situação de estresse no trabalho. Como um estoico lidaria com isso?",
+  "correct": "Praticar a respiração profunda e focar em realizar as tarefas uma de cada vez.",
+  "options": [
+    "Deixar que o estresse o domine e não fazer nada.",
+    "Reclamar para todos sobre o estresse.",
+    "Organizar suas tarefas e priorizar o que realmente importa.",
+    "Se afastar do trabalho e ignorar as responsabilidades."
+  ]
+},
+{
+  "word": "Você recebe uma oportunidade de viajar, mas a data coincide com um compromisso importante. Qual seria a abordagem estoica?",
+  "correct": "Avaliar as prioridades e tomar uma decisão com base no que é mais importante no momento.",
+  "options": [
+    "Cancelar o compromisso sem pensar.",
+    "Desistir da viagem por medo de perder o compromisso.",
+    "Refletir sobre o que é mais significativo e agir conforme essa prioridade.",
+    "Ficar angustiado e não tomar nenhuma decisão."
+  ]
+},
+{
+  "word": "Você se sente pressionado por prazos apertados em um projeto. O que um estoico faria?",
+  "correct": "Focar em dar o seu melhor em cada etapa e não se deixar levar pela ansiedade.",
+  "options": [
+    "Desistir do projeto porque é muito estressante.",
+    "Fazer o possível para trabalhar de maneira produtiva e tranquila.",
+    "Reclamar constantemente sobre a pressão do prazo.",
+    "Deixar que a pressão afete sua qualidade de trabalho."
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+        ]; 
+
+        let currentQuestionIndex = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+
+        function shuffleOptions(options) {
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            return options;
+        }
+
+        function checkAnswer(selected, correct) {
+            return selected === correct;
+        }
+
+        function showNextButton() {
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function hideNextButton() {
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            updateQuestion();
+            hideNextButton();
+        }
+
+        function updateQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            document.getElementById("question").innerText = ` "${currentQuestion.word}"?`;
+
+            // Ensure the correct answer is always included in the options
+            const options = [...currentQuestion.options, currentQuestion.correct];
+            const shuffledOptions = shuffleOptions(options);
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement("button");   
+
+                button.innerText = option;   
+
+                button.className = "button";
+                button.onclick = function () {
+                    if (checkAnswer(option, currentQuestion.correct)) {
+                        correctCount++;
+                        button.classList.add("correct");
+                    } else {
+                        wrongCount++;
+                        // Highlight the correct answer
+                        const correctButton = Array.from(optionsContainer.children).find(btn => btn.innerText === currentQuestion.correct);
+                        if (correctButton) {
+                            correctButton.classList.add("correct");
+                        }
+                    }
+                    showNextButton();
+                    document.getElementById("score").innerText = `Acertos: ${correctCount} | Erros: ${wrongCount}`;
+                    // Disable all buttons after choice
+                    Array.from(optionsContainer.children).forEach(btn => {
+                        btn.onclick = null;
+                    });
+                };
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Start the quiz
+        updateQuestion();
+    </script>
+</body>
+</html>
