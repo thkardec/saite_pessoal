@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Transação</title>
+    <style>
+        /* Estilo para a janela modal */
+        .modal {
+            display: none; /* Esconde a modal por padrão */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro */
+            padding: 10px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 8px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos para o formulário */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        input, select, button, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 15px;
+            }
+
+            input, select, button, textarea {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Registro de Transação</h1>
+    
+    <div class="form-container">
+         <!-- Campo de Descrição -->
+         <input type="text" id="descricao" placeholder="Descrição da transação" /><br><br>
+
+        <input type="number" id="valor" placeholder="Digite o valor" required><br>
+
+        <input type="date" id="data" required><br>
+    
+        <div style="display: flex; align-items: center;">
+           
+            <select id="categoria" required style="margin-right: 10px;">
+                <option value="">Selecione uma categoria</option>
+            </select>
+            <button id="adicionarCategoriaBtn" style="width: 30px; height: 30px; padding: 0; font-size: 20px; text-align: center;">+</button>
+        </div>
+        
+        <select id="tipo" required>
+            <option value="Saida">Saida</option>
+            <option value="Entrada">Entrada</option>
+        </select><br>
+
+        <button id="salvarTransacaoBtn">Salvar Transação</button>
+    </div>
+
+    <!-- Modal para adicionar nova categoria -->
+    <div id="categoriaModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Adicionar Nova Categoria</h2>
+            <input type="text" id="novaCategoria" placeholder="Digite a nova categoria" required><br>
+            <button id="confirmarCategoriaBtn">Adicionar</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Importa a função de inicialização do Firebase e Firestore
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+        // Configuração do Firebase do seu projeto
+        const firebaseConfig = {
+            apiKey: "AIzaSyA6SVZnzC0OfMmEXoxgPnd9XFhqKDRYFgg",
+            authDomain: "thiago-2bafb.firebaseapp.com",
+            projectId: "thiago-2bafb",
+            storageBucket: "thiago-2bafb.appspot.com",
+            messagingSenderId: "768321589968",
+            appId: "1:768321589968:web:5ad525e227b5adec9e04d5"
+        };
+
+        // Inicializa o Firebase e o Firestore
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Preenche automaticamente o campo de data com a data atual
+        const dataInput = document.getElementById("data");
+        const hoje = new Date().toISOString().split("T")[0]; // Obtém a data atual no formato YYYY-MM-DD
+        dataInput.value = hoje;
+
+        // Função para carregar categorias existentes do Firestore
+        async function carregarCategorias() {
+            const categoriaSelect = document.getElementById("categoria");
+            categoriaSelect.innerHTML = '<option value="">Selecione uma categoria</option>'; // Limpa as opções
+            try {
+                const querySnapshot = await getDocs(collection(db, "categorias"));
+                querySnapshot.forEach((doc) => {
+                    const option = document.createElement("option");
+                    option.value = doc.data().nome;
+                    option.textContent = doc.data().nome;
+                    categoriaSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Erro ao carregar categorias: ", error);
+                alert("Erro ao carregar categorias.");
+            }
+        }
+
+        // Função para adicionar uma nova categoria ao Firestore
+        async function adicionarCategoria() {
+            const novaCategoria = document.getElementById("novaCategoria").value.trim();
+            if (novaCategoria) {
+                try {
+                    await addDoc(collection(db, "categorias"), {
+                        nome: novaCategoria
+                    });
+                    alert("Categoria adicionada com sucesso!");
+                    document.getElementById("novaCategoria").value = ""; // Limpa o campo
+                    carregarCategorias(); // Atualiza a lista de categorias
+                    fecharModal(); // Fecha o modal
+                } catch (error) {
+                    console.error("Erro ao adicionar categoria: ", error);
+                    alert("Erro ao adicionar a categoria.");
+                }
+            } else {
+                alert("Por favor, insira um nome para a nova categoria.");
+            }
+        }
+
+        // Função para salvar a transação no Firestore
+        async function salvarTransacao() {
+            const valor = document.getElementById("valor").value;
+            const data = document.getElementById("data").value;
+            const categoria = document.getElementById("categoria").value;
+            const tipo = document.getElementById("tipo").value;
+            const descricao = document.getElementById("descricao").value.trim(); // Obtém a descrição
+
+            if (valor && data && categoria && tipo) {
+                try {
+                    await addDoc(collection(db, "transacoes"), {
+                        valor: parseFloat(valor),
+                        data: data,
+                        categoria: categoria,
+                        tipo: tipo,
+                        descricao: descricao || "" // Armazena a descrição (opcional)
+                    });
+                    alert("Transação salva com sucesso!");
+
+                    // Limpa os campos após salvar
+                    document.getElementById("descricao").value = "";
+                    document.getElementById("valor").value = "";
+                    document.getElementById("data").value = hoje; // Define a data de volta para a data atual
+                    document.getElementById("categoria").value = "";
+                    document.getElementById("tipo").value = "Saida"; // Reseta o tipo para "Saida"
+                } catch (error) {
+                    console.error("Erro ao salvar a transação: ", error);
+                    alert("Erro ao salvar a transação.");
+                }
+            } else {
+                alert("Por favor, preencha todos os campos obrigatórios.");
+            }
+        }
+
+        // Função para abrir o modal
+        function abrirModal() {
+            document.getElementById("categoriaModal").style.display = "block";
+        }
+
+        // Função para fechar o modal
+        function fecharModal() {
+            document.getElementById("categoriaModal").style.display = "none";
+        }
+
+        // Eventos de clique nos botões
+        document.getElementById("salvarTransacaoBtn").addEventListener("click", salvarTransacao);
+        document.getElementById("adicionarCategoriaBtn").addEventListener("click", abrirModal);
+        document.getElementById("confirmarCategoriaBtn").addEventListener("click", adicionarCategoria);
+
+        // Evento de fechar o modal
+        document.querySelector(".close").addEventListener("click", fecharModal);
+
+        // Carrega as categorias quando a página é carregada
+        carregarCategorias();
+    </script>
+
+</body>
+</html>

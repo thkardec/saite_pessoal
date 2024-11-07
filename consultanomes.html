@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Nomes Salvos no Firebase</title>
+</head>
+<body>
+    <h1>Nomes Salvos</h1>
+    <ul id="listaNomes"></ul>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Importa a função de inicialização do Firebase e Firestore
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+        // Configuração do Firebase do seu projeto
+        const firebaseConfig = {
+            apiKey: "AIzaSyA6SVZnzC0OfMmEXoxgPnd9XFhqKDRYFgg",
+            authDomain: "thiago-2bafb.firebaseapp.com",
+            projectId: "thiago-2bafb",
+            storageBucket: "thiago-2bafb.appspot.com",
+            messagingSenderId: "768321589968",
+            appId: "1:768321589968:web:5ad525e227b5adec9e04d5"
+        };
+
+        // Inicializa o Firebase e o Firestore
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Função para buscar e exibir os nomes
+        async function exibirNomes() {
+            const listaNomes = document.getElementById("listaNomes");
+            listaNomes.innerHTML = ""; // Limpa a lista antes de exibir os nomes
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "nomes"));
+                querySnapshot.forEach((doc) => {
+                    const li = document.createElement("li");
+                    li.textContent = doc.data().nome; // Obtém o campo "nome" de cada documento
+                    listaNomes.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Erro ao buscar nomes: ", error);
+                alert("Erro ao carregar nomes.");
+            }
+        }
+
+        // Chama a função para exibir os nomes quando a página é carregada
+        exibirNomes();
+    </script>
+</body>
+</html>
